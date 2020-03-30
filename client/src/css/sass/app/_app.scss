@@ -1,0 +1,75 @@
+html, body {
+    height: 100vh;
+    min-width: 330px;
+    font-size: $root-font-size;
+    background-image: $background-image_color_light;
+    margin: 0;
+    padding: 0;
+}
+.App {
+    position: relative;
+    font-family: $main-font-family;
+}
+.app__header {
+    background-image: $background-image_color_dark;
+    display: flex;
+    position: relative;
+    justify-items: center;
+    height: 80px;
+    width: 100%;
+    min-width: 330px;
+    border-bottom: solid 3px black;
+    padding-left: 15px;
+    z-index: 2;
+}
+.app__content {
+    height: calc(100vh - 80px);
+    padding: 10px 10px 0 10px;
+    position: relative;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.app__container-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+@media all and (max-width: $monitor) {
+    .app__header {
+        height: 70px;
+        padding-left: 10px;
+    }
+    .app__content {
+        height: calc(100vh - 70px) ;
+        padding: 5px 5px 0 5px;
+    }
+    .app__container-buttons { margin-bottom: 8px; }
+}
+@media all and (max-width: $laptop) {
+    .app__header {
+        height: 55px;
+        padding-left: 5px;
+    }
+    .app__content {
+        height: calc(100vh - 55px);
+        padding-top: 3px;
+    }
+    .app__container-buttons { margin-bottom: 5px; }
+}
+@media all and (max-width: $tablet) {
+    .app__header { height: 45px; }
+    .app__content {
+        height: calc(100vh - 45px) ;
+        padding: 2px 2px 0 2px;
+    }
+    .app__container-buttons { font-size: 0.5rem; }
+}
+
+@media all and (max-width: $tablet-sm) {
+    .app__header { height: 35px; }
+    .app__content { height: calc(100vh - 35px); }
+}

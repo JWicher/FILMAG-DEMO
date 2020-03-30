@@ -1,0 +1,44 @@
+.select-localisation{
+    width: 100%;
+    height: 100%;
+    overflow-y: auto; 
+    
+    & > h1 {
+        width: 100%;
+        text-align-last: center;
+        margin: 10px 0;
+    }
+    &__wrapper{
+        & > a { margin: 5px; }
+        width: 100%;
+        position: relative;
+        display: flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+    
+    }
+    &__valid-localiation{
+        height: 50px;
+        width: 250px;
+    }
+}
+
+@media all and (max-width: $laptop) {
+    .select-localisation{
+        & > h1 { font-size: 1.5rem; }
+        &__wrapper > a > button { font-size: 0.8rem; }
+        &__valid-localiation{
+            height: 50px;
+            width: 200px;
+        }
+    }
+}
+@media all and (max-width: $phone-big) {
+    .select-localisation{
+        &__wrapper > a > button { font-size: 0.8rem; }
+        &__valid-localiation{
+            height: 50px;
+            width: 250px;
+        }
+    }
+}

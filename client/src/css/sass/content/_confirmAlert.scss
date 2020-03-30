@@ -1,0 +1,77 @@
+body.react-confirm-alert-body-element {
+    overflow: block;
+}
+.react-confirm-alert-svg {
+  position: absolute;
+  top: 0; left: 0;
+}
+
+.react-confirm-alert-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 99;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+
+  animation: react-confirm-alert-fadeIn 0.3s forwards;
+}
+
+.react-confirm-alert-body {
+  font-family: $main-font-family;
+  text-align: left;
+  color: white;
+  padding: 30px;
+  border-radius: 10px;
+  background: $primaryColor;
+  box-shadow: 0 20px 75px rgba(0, 0, 0, 0.13);
+
+  & > h1 {
+    margin-bottom: 10px;
+    font-size: $rem2-font-size;
+    text-align: center;
+  }
+
+  & > h3 {
+    margin: 0;
+    font-size: 16px;
+  }
+}
+
+  .react-confirm-alert-button-group {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .react-confirm-alert-button-group > button {
+    background: #333;
+    color: #eee;
+    outline: none;
+    border: solid 1px white;
+    border-radius: 5px;
+    display: inline-block;
+    margin-right: 10px;
+    margin-left: 20px;
+    padding: 6px 18px;
+    transition: all 0.1s ease-in-out;
+    cursor: pointer;
+
+    &:hover { background-color: #5a6268; }
+    &:focus { box-shadow: 0 0 0 0.2rem rgba(130, 138, 145, 0.5); }
+  }
+
+  @keyframes react-confirm-alert-fadeIn {
+    from { opacity: 0; }; to { opacity: 1; };
+  }
+
+@media all and (max-width: $tablet) {
+  .react-confirm-alert-body { font-size: 1rem; }
+  .react-confirm-alert-body > h1 { font-size: 1.5rem; }
+}
+@media all and (max-width: $tablet-sm) {
+  .react-confirm-alert-body { font-size: 0.7rem; }
+  .react-confirm-alert-body > h1 { font-size: 1rem; }
+}

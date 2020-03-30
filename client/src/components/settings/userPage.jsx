@@ -1,0 +1,177 @@
+import React, { Component } from 'react';
+import { toast } from 'react-toastify';
+import Joi from 'joi-browser';
+import LinkWithButton from '../common/linkWithButton';
+import ConfirmAlertSettings from '../input forms/confirmAlertSettings';
+import LogoutButtonBox from '../util compnents/logoutButtonBox';
+import userService from '../../services/userService';
+import authService from '../../services/authService';
+import client_paths from '../../constants/client_URL_paths';
+
+class UserPage extends Component {
+    state = {
+        user: {}
+    }
+
+    form_resetPassword = {
+        title: "Zmień hasło",
+        p_label: "Obecne",
+        input_1_type: "password",
+        name_1: "password",
+        p_label_2: "Nowe",
+        name_2: "newPassword",
+        btn_label: "Zmień hasło",
+        btn_css: "btn btn-outline-danger btn-sm",
+        action: (pwd) => this.handleResetPassword(pwd)
+    };
+    form_resetPIN = {
+        title: "Zmień PIN",
+        p_label: "Hasło",
+        p_label_2: "Nowy PIN",
+        input_1_type: "password",
+        name_1: "password",
+        name_2: "newPIN",
+        placeholder_1: "Podaj obecne hasło",
+        placeholder_2: "Podaj nowe hasło",
+        btn_label: "Zmień PIN",
+        btn_css: "btn btn-outline-danger btn-sm",
+        action: (pin) => this.handleResetPIN(pin)
+    };
+    errorMessage = {
+        password: "Podane hasło jest za krótkie. Minimum to 5 znaków",
+        newPin: "Niepoprawna długość PIN. ILość znaków musi wynosić 4"
+    }
+    schemaPassword = {
+        password: Joi.string().min(5).required().error(() => { return { message: this.errorMessage.password }; }),
+        newPassword: Joi.string().min(5).required().error(() => { return { message: this.errorMessage.password }; })
+    };
+    schemaPIN = {
+        password: Joi.string().min(5).required().error(() => { return { message: this.errorMessage.password }; }),
+        newPIN: Joi.string().min(4).max(4).required().error(() => { return { message: this.errorMessage.newPin }; })
+    };
+
+    async componentDidMount() {
+        const user = userService.getUserFromJWT();
+        this.setState({ user });
+    };
+
+    handleResetPassword = async ({ password, newPassword }) => {
+        let user = { ...this.state.user };
+        const error = this.validateNewCredencials({ password, newPassword }, this.schemaPassword);
+
+        if (error) {
+            toast.error(error);
+            return null;
+        }
+        try {
+            const token = await userService.resetUserPassword({ _id: user._id, password, newPassword });
+            authService.setJwt(token)
+
+            toast.success("Zaktualizowano hasło");
+            this.setState({ user: userService.getUserFromJWT() })
+        }
+        catch (ex) {
+            if (ex.response)
+                toast.error(ex.response.data);
+        }
+    };
+
+    async handleResetPIN({ password, newPIN }) {
+        let user = { ...this.state.user };
+        const error = this.validateNewCredencials({ password, newPIN }, this.schemaPIN);
+
+        if (error) {
+            toast.error(error);
+            return null;
+        }
+        try {
+            const token = await userService.resetUserPIN({ _id: user._id, password, newPIN });
+            authService.setJwt(token)
+            this.setState({ user: userService.getUserFromJWT() })
+
+            toast.success("Zaktualizowano PIN");
+        }
+        catch (ex) {
+            if (ex.response)
+                toast.error(ex.response.data);
+        }
+    };
+    validateNewCredencials(user, schema) {
+        const { error } = Joi.validate(user, schema);
+        return error ? error.details[0].message : null;
+    };
+
+
+    renderSettingsNavigationButtons() {
+        const settings = client_paths.settings;
+
+        return <div className="settings__switch-buttons">
+            <LinkWithButton label="Wyświetl zdarzenia" path={client_paths.tasks.main} css={"btn btn-sm btn-primary"} />
+            <LinkWithButton label="Użytkownicy" path={settings.users} />
+            <LinkWithButton label="Lokalizacje" path={settings.localisations} />
+        </div>
+    };
+    renderReturnButton() {
+        return <button className="btn btn-sm btn-primary" onClick={this.props.history.goBack}>Powróć do wybranej lokalizacji</button>
+    }
+    render() {
+        const user = userService.getUserFromJWT();
+        const { name: userName, shortIdentifier } = user;
+        const isSupervisor = userService.isCurrentUserGreaterThanORequalTo("Koordynator");
+
+        return (
+            <div className="app__content">
+
+                <div className="app__container-buttons">
+                    <div className="settings__switch-buttons">
+                        {!isSupervisor && this.renderReturnButton()}
+                        {isSupervisor && this.renderSettingsNavigationButtons()}
+                        <div></div>
+                    </div>
+                    <LogoutButtonBox />
+                </div>
+
+                <div className="settings__user-page">
+                    <div className="settings__user-page_user_box">
+                        <h2>Profil użytkownika</h2>
+
+                        <div className="settings__user-page_user_box__info-box_group">
+                            <p>Login:</p>
+                            <div style={{ textTransform: "capitalize" }} >{userName}</div>
+                        </div>
+
+                        <div className="settings__user-page_user_box__info-box_group">
+                            <p>Hasło :</p>
+                            <div><ConfirmAlertSettings form={this.form_resetPassword} /></div>
+                        </div>
+
+                        <hr className="border border-white" />
+
+                        {
+                            !user.isCommonUser &&
+                            <div>
+
+                                <div className="settings__user-page_user_box__info-box_group">
+                                    <p>Kod Id :</p>
+                                    <div >{shortIdentifier.idCode}</div>
+                                </div>
+
+                                <div className="settings__user-page_user_box__info-box_group">
+                                    <p>PIN :</p>
+                                    <div >{shortIdentifier.pin}</div>
+                                    <div><ConfirmAlertSettings form={this.form_resetPIN} /></div>
+                                </div>
+
+                            </div>
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+        );
+    }
+}
+
+export default UserPage;

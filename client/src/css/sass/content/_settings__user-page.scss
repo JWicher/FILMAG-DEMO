@@ -1,0 +1,106 @@
+.settings__user-page  {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &_user_box {
+        font-family: $main-font-family;
+        width: 500px;
+        padding: 30px;
+        text-align: left;
+        background: $primaryColor;
+        
+        border-radius: 10px;
+        box-shadow: 0 20px 75px rgba(0, 0, 0, 0.13);
+        color: white;
+        
+        & > h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    
+        &__info-box_group {
+                display: flex;
+                align-items: baseline;
+
+                & > p {
+                    width: 60px;
+                    min-width: 60px;
+                }
+                & > div { margin-left: 10px; }
+                & > div > button {
+                    border-top: none;
+                    border-left: none;
+                    border-right: none;
+                }
+        }
+    }
+}
+
+@keyframes react-confirm-alert-fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+}
+
+@media all and (max-width: $laptop) {
+    .settings__user-page  {
+        &_user_box {
+            width: 320px;
+            padding: 20px;
+            
+            & > h2 {
+                margin-bottom: 20px;
+                font-size: 1.2rem;
+            }
+            
+            &__info-box_group {
+                font-size: 0.8rem;
+                > p {
+                    width: 50px;
+                    min-width: 50px;
+                }
+                & > div > button {
+                    font-size: 0.8rem;
+                }
+            }
+        }
+    }
+}
+@media all and (max-width: $tablet) {
+    .settings__user-page  {
+        &_user_box {
+            &__info-box_group{
+                & > p {
+                    width: 40x;
+                    min-width: 40x;
+                }
+            }
+        }
+    }
+}
+@media all and (max-width: $phone-big) {
+    .settings__user-page  {
+        &_user_box {
+            width: 280px;
+            
+            & > h2 {
+                margin-bottom: 10px;
+                font-size: 0.8rem;
+            }
+            
+            &__info-box_group {
+                font-size: 0.6rem;
+                & > p {
+                    width: 35px;
+                    min-width: 35px;
+                }
+                & > div > button {
+                        font-size: 0.6rem;
+                }
+            }
+        
+        }
+    }
+}

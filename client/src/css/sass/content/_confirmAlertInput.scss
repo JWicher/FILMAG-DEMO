@@ -1,0 +1,156 @@
+.confirmAlertInput {
+    font-family: $main-font-family;
+    width: 500px;
+    padding: 30px;
+    text-align: left;
+    background: $primaryColor;
+    
+    border-radius: 10px;
+    box-shadow: 0 20px 75px rgba(0, 0, 0, 0.13);
+    color: white;
+    
+    & > h1 {
+        text-align: center;
+        margin-top: 10px;
+        font-size: $rem2-font-size; 
+    }
+
+    &__input-box {
+        display: flex;
+        flex-direction: column;
+
+        &_group {
+            display: flex;
+            align-items: baseline;
+
+            & > p { 
+                width: 60px;
+                min-width: 60px;
+            }
+
+            & > input {
+                flex-grow: 1;
+                margin-top: 0px;
+                margin-left: 5px;
+                border-radius: 5px;
+                padding-left: 5px;
+                padding: 4px !important;
+                height: 34px;
+
+            }
+            & > select {
+              border-radius: 5px;
+              margin-top: 0px;
+              margin-left: 5px;
+              text-overflow: ellipsis !important;
+              height: auto;
+              padding: 4px !important;
+              font-size: inherit !important;
+              height: 34px;
+            } 
+            & > option {
+              width: 20%;
+            }
+        }
+    }
+
+    &__button-group {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+
+        &  > button {
+            outline: none;
+            border: solid 1px white;
+            background: #333;
+            display: inline-block;
+            padding: 6px 18px;
+            color: #eee;
+            margin-right: 10px;
+            border-radius: 5px;
+            margin-left: 20px;
+            transition: all 0.1s ease-in-out;
+            cursor: pointer;
+        
+            &:hover {
+              color: #fff;
+              background-color: #5a6268;
+            }
+            &:focus { box-shadow: 0 0 0 0.2rem rgba(130, 138, 145, 0.5); }
+          }
+    }
+}
+
+@keyframes react-confirm-alert-fadeIn {
+  from { opacity: 0; }; to { opacity: 1; }
+}
+
+@media all and (max-width: $tablet) {
+  .confirmAlertInput {
+    width: 450px;
+    font-size: 1rem;
+    padding: 25px;
+
+    & > h1 { font-size: 1.5rem; }
+    &__input-box_group {
+          & > p {
+          }
+          & > input {
+              margin-left: 5px;
+              padding-left: 5px;
+          }
+    }
+
+    &__button-group { margin-top: 10px; }
+  }
+}
+@media all and (max-width: $tablet-sm) {
+  .confirmAlertInput {
+    width: 450px;
+    font-size: 0.9rem;
+    padding: 20px;
+    
+    & > h1 { font-size: 1.3rem; }
+    &__input-box_group > p {
+      width: 40px;
+      max-width: 40px;
+    }
+  }
+}
+@media all and (max-width: $phone-big) {
+  .confirmAlertInput {
+    width: 350px;
+    font-size: 0.6rem;
+    padding: 20px;
+
+    & > h1 { font-size: 1rem; }
+    &__input-box_group {
+
+      & > p {
+        width: 35px;
+        min-width: 35px;
+      }
+      
+      & > input {
+        margin-top: 0px;
+        height: 24px;
+      }
+      & > select {
+        margin-top: 0px;
+        margin-left: 5px;
+        padding: 4px !important;
+        height: 24px;
+      } 
+
+    }
+  }
+}
+@media all and (max-width: $phone) {
+  .confirmAlertInput {
+    width: 300px;
+    font-size: 0.6rem;
+    padding: 10px;
+
+    & > h1 { font-size: 1rem; }
+  }
+}

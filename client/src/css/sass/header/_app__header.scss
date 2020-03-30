@@ -1,0 +1,229 @@
+.app__header {
+// główna obsługa headera jako całości jest w pliku _app.scss
+    position: relative;
+    &_header-buttons-wrapper > i { display: none; }
+
+    &_title-barIcon-wrapper{
+        flex-grow: 1;
+        display: flex;
+    }
+    &_headerButtons {
+        display: flex;
+        height: 100%;
+    
+        &-wrap {
+            display: flex;
+            align-items: center;
+            height: 100%;
+
+            & > button {
+                height: 75%;
+                margin-right: 15px;
+                width: 120px;
+            }
+        }
+    }
+    
+
+    &_header-buttons-wrapper-service{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 10px;
+        &:hover { background: rgb(75, 74, 74); }
+        & > i {
+            text-align: center;
+            color: white;
+            width: 70px;
+        }
+        
+        &:hover > .app__header_headerButtons-service,
+        &:hover > .app__header_headerButtons-service:hover{
+            display: flex;
+            flex-direction: column;
+        }
+    }
+    &_headerButtons-service {
+        height: auto;
+        padding: 5px;
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0px;
+        background-image: linear-gradient( #3A3A3A, rgb(32, 32, 32) );
+
+        &-wrap {
+            height: 55px;
+            & > button {
+                width: 155px;
+                height: 50px;
+                font-size: 0.8rem;
+            }
+        }
+    }
+
+
+    //
+
+    &-barIcon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.8rem;
+        width: 100px;
+        height: 100%;
+        color: white;
+
+        &:hover { background: rgb(75, 74, 74); }
+    }
+    
+    &-barIcon:hover > ul,
+    &-barIcon:hover > ul:hover{ display: block; }
+
+    &-menu {
+        display: none;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        position: absolute;
+        top: 100%;
+        right: 0%;
+        border-top: solid 3px black;
+        color: white;
+        max-height: 75vh;
+        overflow: hidden;
+        overflow-y: auto;
+        background-image: linear-gradient( #3A3A3A, rgb(32, 32, 32) );
+
+        & > a {
+            &:hover { text-decoration: none; }
+            & > li { display: flex; }
+            & > li > p { padding-right: 10px; }
+        }
+     
+        &_item{
+            width: 100%;
+            padding: 8px 10px;
+            font-size: 1.5rem;
+            text-decoration: none;
+            color: white;
+            display: flex;
+            align-items: baseline;
+            
+            &:hover { background: rgb(82, 80, 80); }
+            &-main { border-bottom: solid 1px white; }
+            &-main > p { margin: 0; }
+            &-option { border-top: solid 1px white;  }
+            
+            & > i { padding-right: 20px; }
+            &-link,
+            &-link:hover { display: block; }
+        }
+    }
+    &-title {
+        font-size: 3em;
+        color: white;
+        flex-grow: 1;
+        text-align: center;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media all and (max-width: $monitor) {
+    .app__header {
+            &_headerButtons-wrap > button {
+                width: 100px;
+                font-size: 0.8em;
+                margin-right: 10px;
+            }
+            &-barIcon {
+                font-size: 0.7rem;
+                width: 80px;
+            }
+            &-menu_item{ font-size: 1rem; }
+            &-menu_item > i { padding-right: 10px; }
+            &-title { font-size: 2em; }
+        }
+  }
+
+  @media all and (max-width: $laptop) {
+    .app__header {
+            &_headerButtons-wrap > button {
+                width: 80px;
+                font-size: 0.6em;
+                margin-right: 5px;
+            }
+            &-barIcon {
+                font-size: 0.5rem;
+                width: 60px;
+            }
+            &-menu_item{ font-size: 0.8rem; }
+            &-title { font-size: 1.5em; }
+        }
+  }
+  @media all and (max-width: $tablet) {
+    .app__header {
+            &_headerButtons-wrap > button {
+                width: 70px;
+                font-size: 0.5rem;
+                margin-right: 5px;
+            }
+            &-barIcon {
+                font-size: 0.4rem;
+                width: 50px;
+            }
+            &-menu_item{ font-size: 0.7rem; }
+            &-title { font-size: 1.2rem; }
+        }
+  }
+  @media all and (max-width: $tablet-sm) {
+    .app__header {
+        &_header-buttons-wrapper-service{ &> i{ width: 50px;} };
+        &_header-buttons-wrapper{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &:hover { background: rgb(75, 74, 74); }
+            & > i {
+                display: block;
+                font-size: 1rem;
+                text-align: center;
+                color: white;
+                width: 50px;
+            }
+            
+            &:hover > .app__header_headerButtons,
+            &:hover > .app__header_headerButtons:hover{
+                display: flex;
+                flex-direction: column;
+            }
+        }
+        &_headerButtons {
+            height: auto;
+            padding: 5px;
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0px;
+            background-image: linear-gradient( #3A3A3A, rgb(32, 32, 32) );
+
+            &-wrap {
+                height: 55px;
+                & > button {
+                    width: 155px;
+                    height: 50px;
+                    font-size: 0.8rem;
+                    margin-right: 0px;
+                }
+            }
+        }
+        &-barIcon {
+            font-size: 0.3rem;
+            width: 50px;
+        }
+        &-title { font-size: 1rem; }
+    }
+  }

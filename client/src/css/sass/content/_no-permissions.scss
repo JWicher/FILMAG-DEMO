@@ -1,0 +1,37 @@
+.no-permissions-box{
+    width: 600px;
+    height: 200px;
+    
+    border: solid black 1px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    & > h2 { color: red; }
+}
+
+@media all and (max-width: $tablet) {
+    .no-permissions-box{
+        width: 450px;
+        height: 175px;
+        
+        & > h2 { font-size: 1.5rem; }
+        & > p { font-size: 0.9rem; }
+        & > a > button { font-size: 0.9rem; }
+    }
+}
+@media all and (max-width: $phone-big) {
+    .no-permissions-box{
+        width: 320px;
+        height: 130px;
+        
+        & > h2 { font-size: 1rem; }
+        & > p { font-size: 0.6rem; }
+        & > a > button { font-size: 0.6rem; }
+    }
+}

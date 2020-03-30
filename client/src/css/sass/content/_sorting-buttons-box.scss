@@ -1,0 +1,98 @@
+.sorting-buttons-box {
+
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    align-self: flex-start;
+
+    &_paragraph {
+        margin: 0;
+        padding: 0;    
+    }
+    & > button { margin-left: 10px; padding: 5px 0px; }
+    
+    &_sortingButton,
+    &_managerModeButton,
+    &_operationForManyTasksButton,
+    &_chooseManyTasksButton { width: 140px; }
+    &_managerModeButton,
+    &_chooseManyTasksButton { white-space: nowrap; };
+
+}
+
+// @media all and (max-width: $monitor) {
+//     .sorting-buttons-box {
+//         &_paragraph { font-size: 0.8rem; }
+        
+//         & > button {font-size: 0.8rem; }
+//         &_sortingButton { width: 100px; }
+//         &_managerModeButton,
+//         &_operationForManyTasksButton
+//         &_chooseManyTasksButton { width: 120px; }
+//     }
+// }
+@media all and (max-width: $laptop) {
+    .sorting-buttons-box {
+        &_paragraph { font-size: 0.7rem; }
+        & > button {font-size: 0.7rem; padding: 5px 5px; }
+
+        &_sortingButton { width: 100px; }
+        &_managerModeButton,
+        &_operationForManyTasksButton,
+        &_chooseManyTasksButton { width: 120px; }
+    }
+}
+@media all and (max-width: $tablet) {
+    .sorting-buttons-box {
+        &_paragraph { font-size: 0.6rem; }
+        
+        & > button {
+            margin-left: 7px;
+            font-size: 0.6rem;
+            padding: 5px 5px;
+        }
+        &_sortingButton { width: 70px; }
+        &_managerModeButton,
+        &_chooseManyTasksButton { width: 95px; }
+        &_operationForManyTasksButton { width: 95px; }
+
+    }
+}
+@media all and (max-width: $tablet-sm) {
+    .sorting-buttons-box {
+        &_paragraph { font-size: 0.5rem; }
+
+        & > button {
+            font-size: 0.5rem;
+            margin-left: 3px;
+            padding: 3px 5px;
+        }
+
+        &_sortingButton { width: 60px; }
+        &_managerModeButton,
+        &_chooseManyTasksButton { width: 80px; }
+    }
+}
+@media all and (max-width: $phone-big) {
+    .sorting-buttons-box {
+        &_paragraph { font-size: 0.5rem; }
+        & > button { font-size: 0.5rem; padding: 3px 5px; }
+
+        &_sortingButton { width: 60px; }
+        &_managerModeButton,
+        &_chooseManyTasksButton,
+        &_operationForManyTasksButton { width: 80px; }
+    }
+}
+@media all and (max-width: $phone) {
+    .sorting-buttons-box {
+        &_paragraph { font-size: 0.4rem; }
+        & > button { font-size: 0.4rem; }
+
+        &_sortingButton { width: 50px; }
+        &_managerModeButton,
+        &_chooseManyTasksButton { width: 65px; }
+        &_operationForManyTasksButton { width: 65px; }
+
+    }
+}
