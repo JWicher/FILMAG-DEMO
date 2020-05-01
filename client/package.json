@@ -4,6 +4,7 @@
   "private": true,
   "description": "Frontend w ReactJS",
   "author": "Jarosław Wicher",
+  "proxy": "http://localhost:8080",
   "dependencies": {
     "axios": "^0.18.1",
     "babel-polyfill": "^6.26.0",

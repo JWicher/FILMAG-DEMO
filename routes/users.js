@@ -3,8 +3,13 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const Localisation = require('../models/localisation');
 const router = express.Router();
-const block_if_its_not = require('../middleware/checkPermission');
 const utils_userActivity = require("../utils/utils_userActivity");
+const block_if_its_not = require('../middleware/checkPermission');
+const isAuth_middleware = require('../middleware/auth');
+const checkActivity_middleware = require('../middleware/checkActivity');
+
+router.use(isAuth_middleware)
+router.use(checkActivity_middleware)
 
 router.get('/', async (req, res) => {
     const users = await User.model.find().select('-password');

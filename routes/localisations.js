@@ -2,7 +2,11 @@ const Localisation = require('../models/localisation');
 const express = require('express');
 const router = express.Router();
 const checkPermission = require('../middleware/checkPermission');
+const isAuth_middleware = require('../middleware/auth');
+const checkActivity_middleware = require('../middleware/checkActivity');
 
+router.use(isAuth_middleware)
+router.use(checkActivity_middleware)
 
 router.get('/', async (req, res) => {
     const allLocalisations = await Localisation.model.find().sort({ order_number: 1 });

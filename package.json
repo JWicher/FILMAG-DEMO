@@ -1,13 +1,13 @@
 {
-  "name": "FILMAG-EKOPAK-Node",
+  "name": "FILMAG-DEMO",
   "version": "1.0.0",
-  "description": "Backend w Node.js + MongoDB",
+  "description": "Simplified ERP system",
   "author": "Jarosław Wicher",
   "main": "server.js",
   "scripts": {
     "test": "mocha --recursive",
-    "start": "node server.js",
-    "start-development": "node server.js & cd client && npm start",
+    "start": "node server.js & cd client && npm start",
+    "start-development": "node server.js & cd client && npm run build",
     "start-development-just-frontend": "cd client && npm start",
     "start-development-just-server": "node server.js",
     "heroku-postbuild": "cd client && npm install && npm run build"

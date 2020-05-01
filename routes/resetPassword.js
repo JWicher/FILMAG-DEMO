@@ -3,6 +3,11 @@ const router = express.Router();
 const Joi = require('@hapi/joi');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
+const isAuth_middleware = require('../middleware/auth');
+const checkActivity_middleware = require('../middleware/checkActivity');
+
+router.use(isAuth_middleware)
+router.use(checkActivity_middleware)
 
 router.patch('/:id', async (req, res) => {
   const { error } = validateOnlyPassword(req.body);

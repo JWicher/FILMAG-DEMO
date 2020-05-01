@@ -15,8 +15,7 @@ import client_path from './constants/client_URL_paths';
 import 'react-toastify/dist/ReactToastify.css';
 
 class App extends Component {
-  state = {
-  };
+  state = {};
   componentDidMount() {
     checkUserActivity.setActivityDetection();
     try {
@@ -68,8 +67,7 @@ class App extends Component {
             path={client_path.loginPage}
             component={LoginPage}
           />
-          {this.state.user && <Redirect to={client_path.tasks.main}
-          />}
+          {this.state.user && <Redirect to={client_path.tasks.main} />}
           <Route
             path={client_path.home}
             component={Home}

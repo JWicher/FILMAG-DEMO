@@ -3,6 +3,11 @@ const router = express.Router();
 const Task = require('../models/task');
 const cacheMiddleware = require('../middleware/cacheMiddleware')
 const utils_database = require('../utils/util_database');
+const isAuth_middleware = require('../middleware/auth');
+const checkActivity_middleware = require('../middleware/checkActivity');
+
+router.use(isAuth_middleware)
+router.use(checkActivity_middleware)
 
 router.get('/', cacheMiddleware.getCache('tasks'), async (req, res) => {
     const qty_limit = 200;
