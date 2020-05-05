@@ -16,18 +16,20 @@ import 'react-toastify/dist/ReactToastify.css';
 
 class App extends Component {
   state = {};
+  
   componentDidMount() {
     checkUserActivity.setActivityDetection();
     try {
-      const jwt = auth.getJwt;
-      const user = jwtDecode(jwt);
+      const user = jwtDecode(auth.getJwt);
       this.setState({ user });
     }
     catch (ex) { } // ignoruj brak tokenu
   }
+
   componentWillUnmount() {
     checkUserActivity.removeActivityDetection();
   };
+
   render() {
     document.title = "FILMAG";
     return (
