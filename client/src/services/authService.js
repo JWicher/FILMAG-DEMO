@@ -4,7 +4,6 @@ import server_path from '../constants/server_URL_paths';
 const apiEndPoint = server_path.auth;
 const tokenKey = "FilmagToken";
 
-
 export async function login(name, password) {
     const { data: jwt } = await httpService.post(apiEndPoint, { name, password });
     return jwt;
