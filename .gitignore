@@ -1,3 +1,36 @@
 /node_modules
-client/node_modules
 /config/default.json
+/middleware/checkOrigin.js
+/routes/frontend.js
+/routes/localisations.js
+/routes/users.js
+/utils/utils_userActivity.js
+/client/node_modules
+/client/src/components/button components/buttonAddTask.js
+/client/src/components/button components/buttonCloseManyTasks.js
+/client/src/components/common/loader.js
+/client/src/components/common/menuItem.js
+/client/src/components/common/menuItem.js
+/client/src/components/common/menuItems.js
+/client/src/input forms/confirmAlertInput.js
+/client/src/input forms/formInputTask.jsx
+/client/src/input forms/inputCustomSelect.js
+/client/src/settings/localisations.jsx
+/client/src/settings/userPage.jsx
+/client/src/settings/users.jsx
+/client/src/show tasks/showTasks.jsx
+/client/src/show tasks/taskBoxHeader.jsx
+/client/src/show tasks/tasksHeaderBar.jsx
+/client/src/util compnents/logoutButtonBox.jsx
+/client/src/util compnents/selectLocalisation.jsx
+/client/src/css/sass/app
+/client/src/css/sass/content/_logout-button-box.scss
+/client/src/css/sass/content/_settings__switch-buttons.scss
+/client/src/css/sass/content/_task-box.scss
+/client/src/redux/actions/actionsServiceMode.js
+/client/src/redux/reducers/reducerServiceMode.js
+/client/src/redux/reducers/reducerTasks.js
+/client/src/services/localisationService.js
+/client/src/services/taskService.js
+/client/src/services/userService.js
+/client/src/services/
