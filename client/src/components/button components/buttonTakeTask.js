@@ -2,25 +2,14 @@ import React from 'react';
 import ConfirmAlert from '../input forms/confirmAlert';
 import userService from '../../services/userService';
 import taskService from '../../services/taskService';
-import { connect } from 'react-redux';
-import actionsTasks from '../../redux/actions/actionsTasks';
 
 const ButtonTakeTask = (props) => {
 
     const user = userService.getUserFromJWT();
 
     const handleTakeTask = async (task) => {
-
         task.takedBy = userService.getUserFromJWT().name;
-
-        const { tasks: prev_tasks } = props.reducerTasks;
-        const taked_task = await taskService.updateTask(task);
-
-        const updated_tasks = [...prev_tasks];
-        const index = updated_tasks.findIndex(t => t._id === taked_task._id);
-        updated_tasks[index] = taked_task;
-
-        props.updateTasks(updated_tasks)
+        await taskService.updateTask(task);
     };
 
     const getCustomForm = (task) => {
@@ -50,18 +39,4 @@ const ButtonTakeTask = (props) => {
     )
 }
 
-
-const mapStateToProps = (state) => {
-    return state;
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        updateTasks: tasks => dispatch(actionsTasks.updateTasks(tasks)),
-    }
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(ButtonTakeTask)
+export default ButtonTakeTask

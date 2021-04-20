@@ -2,24 +2,14 @@ import React from 'react';
 import ConfirmAlert from '../input forms/confirmAlert';
 import userService from '../../services/userService';
 import finishGoodsService from '../../services/finishGoodsService';
-import { connect } from 'react-redux';
-import actionsFinishGoods from '../../redux/actions/actionsFinishGoods';
 
 const ButtonCloseFinishGood = (props) => {
 
     const handleClose = async (finishGood) => {
-
         finishGood.isClosed = true;
         finishGood.closedBy = userService.getUserFromJWT().name;
         
-        const closed_finishGood = await finishGoodsService.updateFinishGood(finishGood);
-
-        const { finishGoods: prev_finishGoods } = props.reducerFinishGood;
-        const updated_finishGoods = [...prev_finishGoods];
-        const index = updated_finishGoods.findIndex(fG => fG._id === closed_finishGood._id);
-        updated_finishGoods[index] = closed_finishGood;
-
-        props.updateFinishGoods(updated_finishGoods)
+        await finishGoodsService.updateFinishGood(finishGood);
     }
 
     const form_close = {
@@ -33,24 +23,9 @@ const ButtonCloseFinishGood = (props) => {
             </p>,
     };
 
-
     return (
         <ConfirmAlert item={props.finishGood} itemRepresentation={props.finishGood.name} form={form_close} />
     )
 }
 
-
-const mapStateToProps = (state) => {
-    return state;
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        updateFinishGoods: finishGoods => dispatch(actionsFinishGoods.updateFinishGoods(finishGoods))
-    }
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(ButtonCloseFinishGood)
+export default ButtonCloseFinishGood

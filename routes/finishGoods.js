@@ -26,6 +26,7 @@ router.post('/', async (req, res) => {
     let newFinishGood = FinishGood.methods.createFinishGood(req.body);
     newFinishGood = await newFinishGood.save();
 
+    req.io.emit('finishgoods_updated', `Added new finishgood wiith ID: ${newFinishGood._id}`);
     // Logger.info(`Successfully added new finish good: ${newFinishGood._id}`, req.user)
 
     res.send(newFinishGood);
@@ -35,6 +36,7 @@ router.delete('/:id', async (req, res) => {
     const finishGood = await FinishGood.model.findByIdAndRemove(req.params.id);
     if (!finishGood) return res.status(404).send('Nie znaleziono produktu w bazie danych');
 
+    req.io.emit('finishgoods_updated', `Deleted finishgood wiith ID: ${finishGood._id}`);
     // Logger.info(`Successfully deleted finish good: ${finishGood._id}`, req.user)
 
     res.status(200).send(finishGood);
@@ -44,6 +46,7 @@ router.put('/:id', async (req, res) => {
     let updatedFinishGood = await FinishGood.model.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!updatedFinishGood) return res.status(404).send('Nie znaleziono produktu w bazie danych');
 
+    req.io.emit('finishgoods_updated', `Updated finishgood wiith ID: ${updatedFinishGood._id}`);
     // Logger.info(`Successfully updated finish good: ${updatedFinishGood._id}`, req.user)
 
     res.status(200).send(updatedFinishGood);

@@ -2,8 +2,6 @@ import React from 'react';
 import ConfirmAlert from '../input forms/confirmAlert';
 import userService from '../../services/userService';
 import finishGoodsService from '../../services/finishGoodsService';
-import { connect } from 'react-redux';
-import actionsFinishGoods from '../../redux/actions/actionsFinishGoods';
 
 const ButtonReserveFinishGood = (props) => {
 
@@ -32,7 +30,6 @@ const ButtonReserveFinishGood = (props) => {
     };
 
     const handleChangeReservationFinishGood = async (finishGood) => {
-
         if(!finishGood.reservedBy){
             finishGood.reservedBy = user.name;
             finishGood.isReserved = true;
@@ -41,13 +38,8 @@ const ButtonReserveFinishGood = (props) => {
             finishGood.reservedBy = "";
             finishGood.isReserved = false;
         }
-        const { finishGoods: prev_finishGoods } = props.reducerFinishGood;
-        const reserved_finishGood = await finishGoodsService.updateFinishGood(finishGood);
-        const updated_finishGoods = [...prev_finishGoods];
-        const index = updated_finishGoods.findIndex(fG => fG._id === reserved_finishGood._id);
-        updated_finishGoods[index] = reserved_finishGood;
 
-        props.updateFinishGoods(updated_finishGoods)
+        await finishGoodsService.updateFinishGood(finishGood);
     };
 
 
@@ -56,18 +48,4 @@ const ButtonReserveFinishGood = (props) => {
     )
 }
 
-
-const mapStateToProps = (state) => {
-    return state;
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        updateFinishGoods: finishGoods => dispatch(actionsFinishGoods.updateFinishGoods(finishGoods))
-    }
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(ButtonReserveFinishGood)
+export default ButtonReserveFinishGood

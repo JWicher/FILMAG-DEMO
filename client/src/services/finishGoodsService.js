@@ -29,11 +29,11 @@ export async function deleteFinishGood(finishGoodToDelete) {
     return deletedFinishGood;
 }
 
-export function getFilteredColumns(columns, reduxState) {
+export function getFilteredColumns({ starndardColumns, specialColumns }, reduxState) {
     const { managerMode } = reduxState.reducerServiceMode
-    const filteredColumns = [...columns.common];
+    const filteredColumns = [...starndardColumns];
     if (managerMode) {
-        filteredColumns.push(columns.special.column_btnDelete);
+        filteredColumns.push(specialColumns.column_btnDelete);
     }
 
     return filteredColumns;

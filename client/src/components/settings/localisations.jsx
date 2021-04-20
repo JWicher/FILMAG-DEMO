@@ -66,7 +66,6 @@ class Localisations extends Component {
         }
     };
      handleAddLocalisation = async (localisation) => {
-        console.log('add localisation 1')
         try {
             const error = this.validateNewLocalisation(localisation);
             if (error) {

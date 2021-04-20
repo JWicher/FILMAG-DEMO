@@ -1,30 +1,14 @@
 import React from 'react';
-import Joi from 'joi-browser';
 import { confirmAlert } from 'react-confirm-alert';
 import { toast } from 'react-toastify';
 import ConfirmAlertInput from './confirmAlertInput';
 import userService from '../../services/userService';
 import localisationService from '../../services/localisationService';
 import authService from '../../services/authService';
+import schemas from "../constans/schemas/schemas";
 
 class FormInputTask extends ConfirmAlertInput {
-
-  schema = {
-    content: Joi.string().max(40).required().error(() => { return { message: this.errorMessages["content"] }; }),
-    type: Joi.string().required(),
-    createdBy: Joi.string(),
-    location: Joi.string().required().error(() => { return { message: this.errorMessages["location"] }; }),
-    qty: Joi.number().min(1).max(99999).required().error(() => { return { message: this.errorMessages["qty"] }; })
-
-  };
-  errorMessages = {
-    content: 'Treść zdarzenia nie może być pusta i może mieć maks. 40 znaków',
-    qty: 'Pole "Ilość" nie może być puste a wartość być liczbą z zakresu 1 - 9999',
-    location: "Proszę podać lokalizację",
-    idCode: "Nieprawidłowy kod ID",
-    pin: "Nieprawidłowy PIN"
-  }
-
+  schema = schemas.getFormInputTaskSchema().standard;
   isCommonUser = userService.getUserFromJWT().isCommonUser;
 
   componentDidMount() {
@@ -34,13 +18,11 @@ class FormInputTask extends ConfirmAlertInput {
       qty: 1,
       location: this.props.localisation.name,
       createdBy: userService.getUserFromJWT().name
-
     }
 
     this.setState({ item })
     if (this.isCommonUser) {
-      this.schema.idCode = Joi.string().min(3).max(3).required().error(() => { return { message: this.errorMessages["idCode"] }; });
-      this.schema.pin = Joi.string().min(4).max(4).required().error(() => { return { message: this.errorMessages["pin"] }; });
+      this.schema = schemas.getFormInputTaskSchema().expanded;
     }
 
   }
@@ -55,10 +37,6 @@ class FormInputTask extends ConfirmAlertInput {
     }
 
     return null;
-  }
-
-  addQtyToSchema() {
-    return this.schema.qty = Joi.number().min(1).max(99999).required().error(() => { return { message: this.errorMessages["qty"] }; });
   }
 
   resetOnlyCommonUserData() {
@@ -116,7 +94,6 @@ class FormInputTask extends ConfirmAlertInput {
 
   submit = () => {
     this.resetOnlyCommonUserData();
-
 
     confirmAlert({
       customUI: ({ onClose }) => {

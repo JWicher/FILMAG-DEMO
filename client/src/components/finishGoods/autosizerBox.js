@@ -6,27 +6,10 @@ import FinishGoodsAutosizerBoxHeader from './AutosizerBoxHeader';
 import finishGoodsService from '../../services/finishGoodsService';
 import utils from '../../services/utils';
 import { connect } from 'react-redux';
+import columnsFinishGoods from "../constans/columns/columnsFinishGoods";
 
 const AutosizerBox = (props) => {
-    const starndardColumns = [
-        { label: "#", path: "index" },
-        { label: "Nazwa", path: "name" },
-        { label: "Opis", path: "description" },
-        { label: "Ilość", path: "qty" },
-        { label: "Zarejestrowno", path: "createdAtFormatedData" },
-        { label: "Cena", path: "rawMaterialPrice" },
-        { label: "Rezerwacja", path: "reservation" },
-        { label: "Status", path: "status" }
-    ];
-    
-    const specialColumns = {
-        column_btnDelete: { label: "", path: "btnDelete" }
-    };
-
-    const columns = {
-        common: starndardColumns,
-        special: specialColumns
-    };
+    const columns = columnsFinishGoods.getFinishGoodsColumns();
     const reduxState = { reducerServiceMode: props.reducerServiceMode }
     const filteredColumns = finishGoodsService.getFilteredColumns(columns,reduxState);
     const { currentSortingStatusFinishGoods: sortingCriteria } = props.reducerFinishGood

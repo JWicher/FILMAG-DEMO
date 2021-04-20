@@ -37,7 +37,6 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
     const task = await Task.model.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!task) return res.status(404).send('Nie znaleziono zdarzenia w bazie danych.');
-
     req.io.emit('tasks_updated', `Updated task wiith ID: ${task._id}`);
     // Logger.info(`Successfully updated task: ${task._id}`, req.user)
         

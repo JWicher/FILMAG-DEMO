@@ -1,23 +1,12 @@
 import React from 'react';
 import FormPartialDelivery from '../input forms/formPartialDelivery';
 import taskService from '../../services/taskService';
-import { connect } from 'react-redux';
-import actionsTasks from '../../redux/actions/actionsTasks';
 
 const ButtonPartialDelivery = (props) => {
 
     const handlePartialDelivery = async (task) => {
-
         task.partialTime = 0;
-
-        const { tasks: prev_tasks } = props.reducerTasks;
-        const closed_task = await taskService.updateTask(task);
-
-        const updated_tasks = [...prev_tasks];
-        const index = updated_tasks.findIndex(t => t._id === closed_task._id);
-        updated_tasks[index] = closed_task;
-
-        props.updateTasks(updated_tasks)
+        await taskService.updateTask(task);
     }
 
     const form_partialDelivery = {
@@ -36,17 +25,4 @@ const ButtonPartialDelivery = (props) => {
     )
 }
 
-const mapStateToProps = (state) => {
-    return state;
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        updateTasks: tasks => dispatch(actionsTasks.updateTasks(tasks)),
-    }
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(ButtonPartialDelivery)
+export default ButtonPartialDelivery

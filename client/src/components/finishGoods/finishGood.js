@@ -22,8 +22,8 @@ const FinishGood = React.memo((props) => {
                 </div>
             </React.Fragment>
         )
-
     }
+    
     function renderContent(finishGood, column, index) {
         if (column.path === "index") return index;
         else if (column.path === "rawMaterialPrice") return `${finishGood.rawMaterialPrice.value} ${finishGood.rawMaterialPrice.currency}`;
@@ -82,14 +82,12 @@ const FinishGood = React.memo((props) => {
     );
 })
 
-
 const mapStateToProps = (state) => {
     return state;
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateFinishGoods: finishGoods => dispatch(actionsFinishGoods.updateFinishGoods(finishGoods)),
         updateChoosenFinishGoodsFromManagerMode: finishGoodIds => dispatch(actionsFinishGoods.updateChoosenFinishGoodsFromManagerMode(finishGoodIds)),
     }
 };

@@ -9,7 +9,6 @@ const ButtonToggleManagerMode = (props) => {
     const { managerMode } = props.reducerServiceMode
 
     const getManagerModeButtonStyle = () => {
-
         return (
             (managerMode ? "btn-dark" : "btn-outline-dark")
             + " btn btn-sm sorting-buttons-box_managerModeButton"
@@ -36,7 +35,6 @@ const ButtonToggleManagerMode = (props) => {
         }
     }
 
-
     return (
         <button
             className={getManagerModeButtonStyle()}
@@ -59,7 +57,6 @@ const mapDispatchToProps = (dispatch) => {
         toggleChooseManyFinishGoodMode: boolean => dispatch(actionsFinishGoods.toggleChooseManyFinishGoodMode(boolean)),
         updateChoosenTasksFromManagerMode: tasks => dispatch(actionsTasks.updateChoosenTasksFromManagerMode(tasks)),
         updateChoosenFinishGoodsFromManagerMode: finishGoods => dispatch(actionsFinishGoods.updateChoosenFinishGoodsFromManagerMode(finishGoods)),
-
     }
 };
 

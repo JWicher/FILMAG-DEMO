@@ -1,19 +1,11 @@
 import React from 'react';
 import ConfirmAlert from '../input forms/confirmAlert';
 import finishGoodsService from '../../services/finishGoodsService';
-import { connect } from 'react-redux';
-import actionsFinishGoods from '../../redux/actions/actionsFinishGoods';
 
 const ButtonDeleteFinishGood = (props) => {
 
     const handleDeleteFinishGood = async (finishGoodToDelete) => {
-        const deleted_finishGood = await finishGoodsService.deleteFinishGood(finishGoodToDelete);
-        const { finishGoods: prev_finishGoods } = props.reducerFinishGood;
-        const updated_finishGoods = [...prev_finishGoods];
-        const index = updated_finishGoods.findIndex(fG => fG._id === deleted_finishGood._id);
-        updated_finishGoods.splice(index, 1);
-
-        props.updateFinishGoods(updated_finishGoods)
+        await finishGoodsService.deleteFinishGood(finishGoodToDelete);
     };
 
     const form_deleteTask = {
@@ -28,18 +20,4 @@ const ButtonDeleteFinishGood = (props) => {
     )
 }
 
-
-const mapStateToProps = (state) => {
-    return state;
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        updateFinishGoods: finishGoods => dispatch(actionsFinishGoods.updateFinishGoods(finishGoods)),
-    }
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(ButtonDeleteFinishGood)
+export default ButtonDeleteFinishGood

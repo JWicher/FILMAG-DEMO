@@ -21,11 +21,8 @@ const ButtonDeleteManyFinishGoods = (props) => {
             await finishGoodsService.deleteFinishGood({ _id: finishGoodId_toDelete })
         });
 
-        props.updateFinishGoods(updated_finishGoods_list)
         props.updateChoosenFinishGoodsFromManagerMode([])
     }
-
-
 
     const form_deleteManyTask = {
         title: "Potwierdź usunięcie wielu produktów",
@@ -34,7 +31,6 @@ const ButtonDeleteManyFinishGoods = (props) => {
         action: () => deleteAllChoosenFinishGoods()
     };
 
-
     const isButtonDisabled = !props.reducerFinishGood.chooseManyFinishGoodsMode || selectedFinishGoodIDs_fromManagerMode.length <= 0;
 
     return (
@@ -42,14 +38,12 @@ const ButtonDeleteManyFinishGoods = (props) => {
     )
 }
 
-
 const mapStateToProps = (state) => {
     return state;
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateFinishGoods: finishGoods => dispatch(actionsFinishGoods.updateFinishGoods(finishGoods)),
         updateChoosenFinishGoodsFromManagerMode: finishGoods => dispatch(actionsFinishGoods.updateChoosenFinishGoodsFromManagerMode(finishGoods)),
     }
 };

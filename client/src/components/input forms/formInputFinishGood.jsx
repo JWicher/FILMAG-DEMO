@@ -1,13 +1,12 @@
 import React from 'react';
-import Joi from 'joi-browser';
 import { confirmAlert } from 'react-confirm-alert';
 import { toast } from 'react-toastify';
 import ConfirmAlertInput from './confirmAlertInput';
 import userService from '../../services/userService';
 import currencyEnums from "../../enums/currency.json";
+import schemas from "../constans/schemas/schemas";
 
 class formInputFinishGood extends ConfirmAlertInput {
-
   state = {
     item: {},
     initialItem: {
@@ -23,23 +22,8 @@ class formInputFinishGood extends ConfirmAlertInput {
       isClosed: false
     }
   }
-  schema = {
-    name: Joi.string().max(30).required().error(() => { return { message: this.errorMessages["name"] }; }),
-    description: Joi.string().max(100).required().error(() => { return { message: this.errorMessages["description"] }; }),
-    qty: Joi.number().min(1).max(99999).required().error(() => { return { message: this.errorMessages["qty"] }; }),
-    rawMaterialPrice_value: Joi.string().allow(''),
-    rawMaterialPrice_currency: Joi.string().valid(...Object.values(currencyEnums)),
-    createdBy: Joi.string().required(),
-    isReserved: Joi.boolean(),
-    isClosed: Joi.boolean(),
-    reservedBy: Joi.string().allow(''),
-    closedBy: Joi.string().allow('')
-  };
-  errorMessages = {
-    name: 'Nazwa nie może być pusta i może mieć maks. 30 znaków',
-    description: 'Opis nie może być pusty i może mieć maks. 100 znaków',
-    qty: 'Pole "Ilość" nie może być puste a wartość być liczbą z zakresu 1 - 9999'
-  }
+
+  schema = schemas.getFormInputFinishGoodSchema();
 
   isCommonUser = userService.getUserFromJWT().isCommonUser;
 

@@ -2,18 +2,12 @@ import React from 'react';
 import { toast } from 'react-toastify';
 import FormInputFinishGood from '../input forms/formInputFinishGood';
 import finishGoodsService from '../../services/finishGoodsService';
-import { connect } from 'react-redux';
-import actionsFinishGoods from '../../redux/actions/actionsFinishGoods';
 
 const ButtonAddFinishGood = (props) => {
 
     const handleAddFinishGood = async (new_finishGood) => {
         try{
-            const newFinishGood = await finishGoodsService.addFinishGood(new_finishGood);
-            const { finishGoods } = props.reducerFinishGood;
-            finishGoods.unshift(newFinishGood);
-            props.updateFinishGoods(finishGoods);
-
+            await finishGoodsService.addFinishGood(new_finishGood);
             toast.success("Dodano produkt");
         }
         catch(ex){
@@ -43,18 +37,4 @@ const ButtonAddFinishGood = (props) => {
     )
 }
 
-
-const mapStateToProps = (state) => {
-    return state;
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        updateFinishGoods: finishGoods => dispatch(actionsFinishGoods.updateFinishGoods(finishGoods)),
-    }
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(ButtonAddFinishGood)
+export default ButtonAddFinishGood

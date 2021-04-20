@@ -1,19 +1,11 @@
 import React from 'react';
 import ConfirmAlert from '../input forms/confirmAlert';
 import taskService from '../../services/taskService';
-import { connect } from 'react-redux';
-import actionsTasks from '../../redux/actions/actionsTasks';
 
 const ButtonDeleteTask = (props) => {
 
     const handleDeleteTask = async (taskToDelete) => {
-        const deleted_task = await taskService.deleteTask(taskToDelete);
-        const { tasks: prev_tasks } = props.reducerTasks;
-        const updated_tasks = [...prev_tasks];
-        const index = updated_tasks.findIndex(t => t._id === deleted_task._id);
-        updated_tasks.splice(index, 1);
-
-        props.updateTasks(updated_tasks)
+        await taskService.deleteTask(taskToDelete);
     };
 
     const form_deleteTask = {
@@ -28,18 +20,4 @@ const ButtonDeleteTask = (props) => {
     )
 }
 
-
-const mapStateToProps = (state) => {
-    return state;
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        updateTasks: tasks => dispatch(actionsTasks.updateTasks(tasks)),
-    }
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(ButtonDeleteTask)
+export default ButtonDeleteTask

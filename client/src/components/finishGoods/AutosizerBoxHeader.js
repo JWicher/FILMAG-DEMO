@@ -1,6 +1,5 @@
 import React from 'react';
 import utils from '../../services/utils';
-import { connect } from 'react-redux';
 
 const FinishGoodsAutosizerBoxHeader = (props) => {
     const { columns } = props;
@@ -18,6 +17,4 @@ const FinishGoodsAutosizerBoxHeader = (props) => {
     )
 }
 
-export default connect(
-    (state) => { return state }
-)(FinishGoodsAutosizerBoxHeader)
+export default FinishGoodsAutosizerBoxHeader

@@ -22,11 +22,8 @@ const ButtonDeleteManyTasks = (props) => {
             await taskService.deleteTask(taskObjectToDelete)
         });
 
-        props.updateTasks(updated_tasks_list)
         props.updateChoosenTasksFromManagerMode([])
     }
-
-
 
     const form_deleteManyTask = {
         title: "Potwierdź usunięcie wielu zdarzeń",
@@ -34,7 +31,6 @@ const ButtonDeleteManyTasks = (props) => {
         btn_css: "btn-outline-danger btn-sm sorting-buttons-box_operationForManyTasksButton",
         action: () => deleteAllChoosenTasks()
     };
-
 
     const isButtonDisabled = !props.reducerTasks.chooseManyTasksMode || selectedTasksIDs_fromManagerMode.length <= 0;
 
@@ -50,7 +46,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateTasks: tasks => dispatch(actionsTasks.updateTasks(tasks)),
         updateChoosenTasksFromManagerMode: tasks => dispatch(actionsTasks.updateChoosenTasksFromManagerMode(tasks)),
     }
 };

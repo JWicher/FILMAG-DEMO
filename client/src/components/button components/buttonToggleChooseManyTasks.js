@@ -13,9 +13,7 @@ const ButtonToggleChooseManyTasks = (props) => {
         >Zaznacz wiele
         </button>
     )
-
 }
-
 
 const mapStateToProps = (state) => {
     return state;

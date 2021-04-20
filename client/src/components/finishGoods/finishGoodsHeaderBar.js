@@ -30,7 +30,6 @@ const FinishGoodsHeaderBar = (props) => {
         {name: "Produkcja", category: "Produkcja", path: client_paths.tasks.main}
     ]
 
-
     const headerButtons = [
         { label: "Dodaj", type: "order" }
     ];
