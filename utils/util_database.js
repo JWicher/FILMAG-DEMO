@@ -27,9 +27,22 @@ async function makeBackupDB() {
     }
 }
 
-async function increasePendingTime() {
-    try { await Task.model.updateMany({ isDone: false, time: { $lte: 1440 } }, { $inc: { time: +1, partialTime: +1 } }); }
-    catch (ex) { if (ex) console.log(ex) }
+async function increasePendingTime(io) {
+    try {
+        await Task.model.updateMany({
+                isDone: false,
+                time: { $lte: 1440 }
+            },
+            {
+                $inc: {
+                    time: +1,
+                    partialTime: +1
+                }
+            }
+        )
+    io.emit('tasks_updated', `Task time incrementation`);
+    }
+    catch (ex) { console.log(ex) }
 };
 
 module.exports = {

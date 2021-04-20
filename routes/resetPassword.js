@@ -3,8 +3,12 @@ const router = express.Router();
 const Joi = require('@hapi/joi');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
+const Logger = require("../utils/logger");
+
 const isAuth_middleware = require('../middleware/auth');
 const checkActivity_middleware = require('../middleware/checkActivity');
+
+const constants = require("../constants/constants");
 
 router.use(isAuth_middleware)
 router.use(checkActivity_middleware)
@@ -33,9 +37,25 @@ router.patch('/:id', async (req, res) => {
   const updatedUser = await user.save();
   const token = updatedUser.generateAuthToken();
 
+  // Logger.info(`Successfully reseted password for user: ${updatedUser._id}`, req.user)
+
   res.status(200).send(token);
 });
 
+router.get('/default/:id', async (req, res) => {
+  const user = await User.model.findById(req.params.id);
+  if (!user) return res.status(404).send("Nie znaleziono konta");
+
+  const salt = await bcrypt.genSalt(10);
+  const defaultPassowrd = constants.defaultPassword;
+  user.password = await bcrypt.hash(defaultPassowrd, salt);
+
+  const updatedUser = await user.save();
+
+  // Logger.info(`Successfully reseted password for user: ${updatedUser._id}`, req.user)
+
+  res.status(200).send(updatedUser._id);
+});
 
 function validateOnlyPassword(reqBody) {
 

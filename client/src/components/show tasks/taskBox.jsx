@@ -5,27 +5,10 @@ import Task from './task';
 import TaskBoxHeader from './taskBoxHeader';
 import taskService from '../../services/taskService';
 import { connect } from 'react-redux';
+import columnsTaskBox from "../constans/columns/columnsTaskBox";
 
 const TaskBox = (props) => {
-    // console.log('render show data TaskBox')
-
-    const columns = {
-        common: [
-            { label: "#", path: "#" },
-            { label: "Zdarzenie", path: "content" },
-            { label: "Ilość", path: "qty" },
-            { label: "Dostarczono", path: "partialQty" },
-            { label: "Miejsce", path: "location" },
-            { label: "Czas", path: "time" },
-        ],
-        special: {
-            column_take: { label: "", path: "take" },
-            column_btnClose: { label: "", path: "btnClose" },
-            column_createdInFormatedData: { label: "Data rejestracji", path: "createdInFormatedData" },
-            column_takedBy: { label: "Obsługuje", path: "takedBy" },
-            column_btnDelete: { label: "", path: "btnDelete" }
-        }
-    };
+    const columns = columnsTaskBox.getTaskBoxColumns();
 
     const reduxState = {
         reducerTasks: props.reducerTasks,
@@ -39,6 +22,7 @@ const TaskBox = (props) => {
     return (
         <div className="task-box">
             <TaskBoxHeader columns={filteredClumns} />
+            {data.length === 0 && <p>brak danych</p>}
             <AutoSizer >
                 {({ height, width }) => (
                     <FixedSizeList

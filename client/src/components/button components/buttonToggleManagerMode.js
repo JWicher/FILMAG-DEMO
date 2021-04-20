@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import actionsServiceMode from '../../redux/actions/actionsServiceMode';
 import actionsTasks from '../../redux/actions/actionsTasks';
+import actionsFinishGoods from '../../redux/actions/actionsFinishGoods';
 
 const ButtonToggleManagerMode = (props) => {
 
@@ -15,19 +16,22 @@ const ButtonToggleManagerMode = (props) => {
         )
     }
 
-    const reset_selectedTasksIDs_fromManagerMode = () => {
+    const reset_selectedIDs_fromManagerMode = () => {
         props.updateChoosenTasksFromManagerMode([])
+        props.updateChoosenFinishGoodsFromManagerMode([])
     }
 
     const turnOff_chooseManyTasksMode = () => {
         props.toggleChooseManyTasksMode(false)
+        props.toggleChooseManyFinishGoodMode(false)
     }
 
     const checkAndtoggleChooseManyTasksMode = () => {
         props.toggleManagerMode(!managerMode)
+        props.toggleChooseManyFinishGoodMode(!managerMode)
 
         if (!managerMode) {
-            reset_selectedTasksIDs_fromManagerMode();
+            reset_selectedIDs_fromManagerMode();
             turnOff_chooseManyTasksMode();
         }
     }
@@ -52,7 +56,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         toggleManagerMode: boolean => dispatch(actionsServiceMode.toggleManagerMode(boolean)),
         toggleChooseManyTasksMode: boolean => dispatch(actionsTasks.toggleChooseManyTasksMode(boolean)),
+        toggleChooseManyFinishGoodMode: boolean => dispatch(actionsFinishGoods.toggleChooseManyFinishGoodMode(boolean)),
         updateChoosenTasksFromManagerMode: tasks => dispatch(actionsTasks.updateChoosenTasksFromManagerMode(tasks)),
+        updateChoosenFinishGoodsFromManagerMode: finishGoods => dispatch(actionsFinishGoods.updateChoosenFinishGoodsFromManagerMode(finishGoods)),
 
     }
 };

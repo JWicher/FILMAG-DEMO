@@ -1,6 +1,6 @@
 .confirmAlertInput {
     font-family: $main-font-family;
-    width: 500px;
+    width: 550px;
     padding: 30px;
     text-align: left;
     background: $primaryColor;
@@ -24,8 +24,7 @@
             align-items: baseline;
 
             & > p { 
-                width: 60px;
-                min-width: 60px;
+              @include width_minwidth(70px);
             }
 
             & > input {
@@ -36,8 +35,19 @@
                 padding-left: 5px;
                 padding: 4px !important;
                 height: 34px;
-
             }
+
+            & > textarea {
+              flex-grow: 1;
+              margin-top: 0px;
+              margin-bottom: 10px;
+              margin-left: 5px;
+              border-radius: 5px;
+              padding-left: 5px;
+              padding: 4px !important;
+              height: 78px;
+          }
+
             & > select {
               border-radius: 5px;
               margin-top: 0px;
@@ -50,6 +60,10 @@
             } 
             & > option {
               width: 20%;
+            }
+
+            &_InputBoxWithSelectOption-select{
+              width: 80px !important;
             }
         }
     }
@@ -99,9 +113,14 @@
               margin-left: 5px;
               padding-left: 5px;
           }
+
+          &_InputBoxWithSelectOption-select{
+            width: 70px !important;
+          }
     }
 
     &__button-group { margin-top: 10px; }
+
   }
 }
 @media all and (max-width: $tablet-sm) {
@@ -114,6 +133,10 @@
     &__input-box_group > p {
       width: 40px;
       max-width: 40px;
+    }
+
+    &__input-box_group_InputBoxWithSelectOption-select{
+      width: 60px !important;
     }
   }
 }
@@ -142,6 +165,10 @@
         height: 24px;
       } 
 
+    }
+
+    &__input-box_group_InputBoxWithSelectOption-select{
+      width: 50px !important;
     }
   }
 }

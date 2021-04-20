@@ -9,7 +9,10 @@
         margin: 0;
         padding: 0;    
     }
-    & > button { margin-left: 10px; padding: 5px 0px; }
+    & > button {
+        margin-left: 10px;
+        padding: 5px 0px;
+    }
     
     &_sortingButton,
     &_managerModeButton,
@@ -20,17 +23,14 @@
 
 }
 
-// @media all and (max-width: $monitor) {
-//     .sorting-buttons-box {
-//         &_paragraph { font-size: 0.8rem; }
-        
-//         & > button {font-size: 0.8rem; }
-//         &_sortingButton { width: 100px; }
-//         &_managerModeButton,
-//         &_operationForManyTasksButton
-//         &_chooseManyTasksButton { width: 120px; }
-//     }
-// }
+.buttontext {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+    text-overflow: ellipsis;
+}
+
 @media all and (max-width: $laptop) {
     .sorting-buttons-box {
         &_paragraph { font-size: 0.7rem; }

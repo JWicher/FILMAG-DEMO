@@ -17,7 +17,16 @@ const initialState = {
   reducerServiceMode: {
     serviceMode: false,
     serviceMode_jobName: "Admin",
-    managerMode: false
+    managerMode: false // w przyciskach "tryb zarządzania"
+  },
+  reducerFinishGood: {
+    finishGoods: null,
+    currentSortingStatusFinishGoods: "All",
+    chooseManyFinishGoodsMode: false,
+    selectedFinishGoodIDs_fromManagerMode: []
+  },
+  reducerLogs: {
+    currentSortingStatusLogs: "All",
   }
 };
 

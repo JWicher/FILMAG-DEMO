@@ -8,37 +8,29 @@ import ProtectedRoute from '../util compnents/protectedRoute';
 import client_paths from '../../constants/client_URL_paths';
 
 const SettingsSwitch = () => {
-    const path_settings = client_paths.settings;
-
-    const submenuOptions = [
-        { label: "Wykaz użytkowników", path: path_settings.users },
-        { label: "Wykaz lokalizacji", path: path_settings.localisations },
-        { label: "Mój profil", path: path_settings.user }
-    ]
-
     return (
         <React.Fragment>
-            <SettingsHeaderBar validLocations={submenuOptions} />
+            <SettingsHeaderBar />
             <Switch>
                 <ProtectedRoute
-                    path={path_settings.localisations}
+                    path={client_paths.settings.localisations}
                     requireUserLevel={"Koordynator"}
                     component={Localisations}
                     redirectPath={client_paths.noPermissions}
                 />
                 <ProtectedRoute
-                    path={path_settings.users}
+                    path={client_paths.settings.users}
                     requireUserLevel={"Koordynator"}
                     component={Users}
                     redirectPath={client_paths.noPermissions}
                 />
                 <ProtectedRoute
-                    path={path_settings.user}
+                    path={client_paths.settings.user}
                     requireUserLevel={"Operator"}
                     component={UserPage}
                     redirectPath={client_paths.loginPage}
                 />
-                <Redirect from={path_settings.main} to={path_settings.users} />
+                <Redirect from={client_paths.settings.main} to={client_paths.settings.users} />
             </Switch>
         </React.Fragment>
     );

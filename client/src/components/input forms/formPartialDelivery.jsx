@@ -5,10 +5,14 @@ import { confirmAlert } from 'react-confirm-alert';
 import ConfirmAlertInput from './confirmAlertInput';
 
 class FormPartialDelivery extends ConfirmAlertInput {
-  state = {
-
-  };
-  schema = { partialQty: Joi.number().min(1).max(99999).required().error(() => { return { message: this.errorMessage }; }) }
+  state = {};
+  schema = {
+    partialQty: Joi.number().min(1).max(99999)
+      .required()
+      .error(() => {
+        return { message: this.errorMessage }
+      })
+    }
   inputValue = 0;
   originalPartialQty = 0;
   errorMessage = "Podana ilość musi być określona jako liczba i mieścić się w zakresie 1-9999.";

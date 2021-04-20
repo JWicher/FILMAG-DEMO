@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const excellFileService = require('../utils/prepareExcelFile');
 const Task = require('../models/task');
+const Logger = require("../utils/logger");
 const isAuth_middleware = require('../middleware/auth');
 const checkActivity_middleware = require('../middleware/checkActivity');
 
@@ -13,6 +14,9 @@ router.get('/', async (req, res, next) => {
   const wbout = excellFileService.createExcellFileBuffer(data)
   res.setHeader('Content-Disposition', "attachment; filename=Filmag-Zdarzenia.xlsx");
   res.type('application/octet-stream');
+
+  // Logger.info("Successfully prepared excell file with history data", req.user)
+
   res.send(wbout);
 })
 

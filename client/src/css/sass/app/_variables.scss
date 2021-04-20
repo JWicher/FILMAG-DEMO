@@ -1,0 +1,19 @@
+// main variables
+$primaryColor:  rgb(51, 44, 44);
+$background-image_color_light: linear-gradient(white, rgb(184, 183, 183));
+$background-image_color_dark: linear-gradient( #3A3A3A, rgb(32, 32, 32) );
+$main-font-family: Arial, Helvetica, sans-serif;
+
+$root-font-size: 16px;
+$rem3-font-size: 3rem;
+$rem2-font-size: 2rem;
+$rem1-font-size: 1rem;
+$table-settings-font: 16px;
+
+// RWD
+$monitor: 1500px;
+$laptop: 1250px;
+$tablet: 800px;
+$tablet-sm: 650px;
+$phone-big: 490px;
+$phone: 370px;

@@ -1,0 +1,175 @@
+.task-box {
+    font-size: 1.5rem;
+    text-align: center;
+    overflow: hidden;
+    flex: 1;
+
+    &__header {
+        padding-right: 5px;
+        border-bottom: 1px solid grey;
+        font-weight: bold;
+    }
+    
+    &__task { height: 41px; }
+    &__task-color{
+        &_ng{ background: rgba(200, 53, 69, 0.4); }
+        &_ok{ background: rgba(40, 167, 69, 0.4); }
+        &_warning{ background: rgba(227, 255, 69, 0.4); }
+    }
+    &__header,
+    &__task{    
+        font-size: 1.4rem;
+        display: flex;
+        justify-content: stretch;
+        align-items: center;
+        overflow: hidden;
+        & > div > button > p { margin: 0px; } // żeby przyciski np clsoe task, wyswietlały się poprawnie
+        &_index{ @include width_minwidth(50px); }
+        &_content{ flex-grow: 1; overflow: hidden; padding-left: 5px;
+            &-text{ text-align: left; white-space: pre; };
+            &-createdInFormatedData{ display: none; }
+        }
+        &_qty{ @include width_minwidth(60px);
+            &-partialDelivery{ display: none; };
+        }
+        &_partialQty{ @include width_minwidth(160px); }
+        &_location{ @include width_minwidth(300px); }
+        &_time{ @include width_minwidth(65px); }
+        &_take{ @include width_minwidth(125px); & > button{ width: 110px}; }
+        &_takedBy{ @include width_minwidth(260px); }
+        &_createdInFormatedData{ @include width_minwidth(230px); }
+        &_btnClose{ @include width_minwidth(75px); margin-right: 5px; }
+        &_btnDelete{  @include width_minwidth(50px); margin-right: 5px; }
+
+        &:hover{ background: rgba(grey, $alpha: .3) }
+
+    }
+    &_btn-label_short { display: none; }
+
+}
+
+@keyframes blinking-task {  
+  0% { background: #CC0000; }
+  100% { background: #ffcdd2; }
+}
+
+.priority-task {
+  animation: blinking-task 1s linear infinite;
+} 
+
+@media all and (max-width: $monitor) {
+    .task-box {
+        &__header,
+        &__task {    
+            font-size: 1.0rem;
+            &_index{ @include width_minwidth(35px); }
+            &_content{
+                &-text{ font-size: 1.1rem; }
+                &-createdInFormatedData{ font-size: 0.7rem; text-align: left; display: block; }
+            }
+            &_qty{ @include width_minwidth(50px);
+                &-partialDelivery{ font-size: 0.7rem; display: block;  };
+            }
+            &_partialQty{ display: none; }
+            &_location{ @include width_minwidth(250px);  }
+            &_time{ @include width_minwidth(50px); }
+            &_takedBy{ @include width_minwidth(225px); }
+            &_createdInFormatedData{ display: none; }
+
+        }
+
+    }
+}
+@media all and (max-width: $laptop) {
+    .task-box {
+        &__header,
+        &__task {
+            font-size: 0.9rem;
+            & > div > button { font-size: 0.7rem; }
+            &_index{ @include width_minwidth(35px); }
+            &_content-text{ font-size: 0.9rem; }
+            &_qty{ @include width_minwidth(45px); }
+            &_location{ @include width_minwidth(120px);  }
+            &_time{ @include width_minwidth(50px); }
+            &_take{ @include width_minwidth(93px); & > button{ width: 89px} }
+            &_takedBy{ @include width_minwidth(110px); }
+            &_btnClose{ @include width_minwidth(61px); }
+            &_btnDelete{  @include width_minwidth(45px); }
+        }
+
+    }
+}
+@media all and (max-width: $tablet) {
+    .task-box {
+        &__header,
+        &__task {    
+            font-size: 0.8rem;
+            & > div > button { font-size: 0.7rem; }
+            &_index{ @include width_minwidth(30px); }
+            &_qty{ @include width_minwidth(45px);
+                &-partialDelivery{ font-size: 0.7rem; };
+            }
+            &_location{ @include width_minwidth(120px);  }
+            &_time{ @include width_minwidth(50px); }
+            &_takedBy{ @include width_minwidth(100px); }
+        }
+
+    }
+}
+@media all and (max-width: $tablet-sm) {
+    .task-box {
+        &__header,
+        &__task {     
+            font-size: 0.6rem;
+            & > div > button { font-size: 0.5rem; padding: 3px 8px;}
+            &_index{ @include width_minwidth(25px); }
+            &_content{ padding-left: 2px;
+                &-text{ font-size: 0.7rem; }
+                &-createdInFormatedData{ font-size: 0.6rem; }
+            }
+            &_qty{ @include width_minwidth(30px);
+                &-main{ font-size: 0.7rem; };
+                &-partialDelivery{ font-size: 0.6rem; };
+            }
+            &_location{ @include width_minwidth(80px);  }
+            &_time{ @include width_minwidth(30px); }
+            &_take{ @include width_minwidth(35px); & > button{ width: 25px} }
+            &_takedBy{ @include width_minwidth(70px); }
+            &_btnClose{ @include width_minwidth(25px); margin-right: 3px; }
+            &_btnDelete{  @include width_minwidth(25px); margin-right: 3px; }
+        }
+
+        &_btn-label_full { display: none; }
+        &_btn-label_short { display: block; }
+    }
+}
+@media all and (max-width: $phone-big) {
+    .task-box {
+        &__header,
+        &__task {     
+            font-size: 0.6rem; 
+            &_index{ @include width_minwidth(25px); };
+            &_content-createdInFormatedData{ font-size: 0.5rem; }
+            &_qty{ @include width_minwidth(30px);
+                &-partialDelivery{ font-size: 0.5rem; };
+            };
+            &_location{ @include width_minwidth(80px);  };
+            &_time{ @include width_minwidth(30px); };
+            &_takedBy{ @include width_minwidth(65px); };
+        }
+    }
+}
+@media all and (max-width: $phone) {
+    .task-box {
+        &__header,
+        &__task {    
+            font-size: 0.5rem; 
+            &_index{ @include width_minwidth(20px); }
+            &_content-text{ white-space: pre-line; }
+            &_qty{ @include width_minwidth(25px); }
+            &_location{ @include width_minwidth(80px);  }
+            &_time{ @include width_minwidth(30px); }
+            &_takedBy{ @include width_minwidth(55px); }
+        }
+    }
+}

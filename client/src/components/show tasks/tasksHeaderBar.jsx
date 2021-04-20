@@ -1,28 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import MenuMainItem from '../common/menuMainItem';
-import MenuItems from '../common/menuItems';
-import ButtonAddTask from '../button components/buttonAddTask';
-import localisationService from '../../services/localisationService';
 import userService from '../../services/userService';
 import client_paths from '../../constants/client_URL_paths';
 import { connect } from 'react-redux';
 import actionsServiceMode from '../../redux/actions/actionsServiceMode';
 import actionsLocalisations from '../../redux/actions/actionsLocalisations';
+import renderMaster from "./renderServices/renderMaster";
 
-const Tasks_HeaderBar = (props) => {
+const TasksHeaderBar = (props) => {
     const [currentLocalisation, setCurrentLocalisation] = useState(props.reducerLocalisations.currentLocalisation);
     const [serviceMode, setServiceModen] = useState(props.reducerServiceMode.serviceMode);
 
     const handleChangeCurrentLocalisation = localisation => {
         setCurrentLocalisation(localisation);
         props.changeCurrentLocalisation(localisation)
+        props.toggleManagerMode(false)
     };
     const handleChangeServiceMode = serviceMode => {
         setServiceModen(serviceMode);
         props.toggleServiceMode(serviceMode)
+
     };
 
+    useEffect(() => {
+        setCurrentLocalisation(props.reducerLocalisations.currentLocalisation);
+        setServiceModen(props.reducerServiceMode.serviceMode);
+    }, [props.reducerLocalisations.currentLocalisation, props.reducerServiceMode.serviceMode])
 
+    const isCommonUser = userService.getUserFromJWT().isCommonUser;
+    const renderMasterInstance = renderMaster.tasksHeaderBarModule.init({ serviceMode, serviceMode_jobName: props.reducerServiceMode.serviceMode_jobName })
 
     const headerButtons = [
         { label: "Zamów formatkę", type: "order" },
@@ -32,91 +37,33 @@ const Tasks_HeaderBar = (props) => {
         { label: "Czyszczenie", type: "cleaning" }
     ];
 
-    const allJobNames = userService.getJobNames();
+    const menuItems = {
+        managersMainMenuItems: [
+            {name: "Ustawienia", category: "Ustawienia", path: client_paths.settings.main},
+            {name: "Wyroby gotowe", category: "Wyroby gotowe", path: client_paths.finishGoods.main}
+        ],
+        workersMinMenuItems: [
+            {name: "Wyroby gotowe", category: "Wyroby gotowe", path: client_paths.finishGoods.main}
+        ]
+    };
 
-    function renderShowDataMenu() {
-        const validLocalisations = localisationService.getCurrentUserLocalisations();
-        const isAdmin = userService.isCurrentUserGreaterThanORequalTo("Admin");
-
-        return (
-            <div className="app__header-barIcon  common-cursor-pointer" >
-                <i className="fa far fa-bars fa-3x"></i>
-                <ul className="app__header-menu">
-                    {isAdmin && renderServiceModeMainButton()}
-                    <MenuMainItem label="Ustawienia" path={client_paths.settings.main} icon="fa-cog" />
-                    <MenuItems items={validLocalisations} action={handleChangeCurrentLocalisation} />
-                </ul>
-            </div>
-        )
-    }
-
-    function renderServiceModeMainButton() {
-        const toggle = serviceMode ? "fa fa-toggle-on" : "fa fa-toggle-off";
-
-        return (
-            <li className="app__header-menu_item" onClick={() => handleChangeServiceMode(!serviceMode)} >
-                <i className={toggle}></i>
-                Tryb testu widoków
-            </li>
-        )
-    }
-
-    function renderAddTaskButtons() {
-        return (
-            <div className="app__header_header-buttons-wrapper">
-                <i className="fa fas fa-cart-arrow-down"></i>
-                <div className="app__header_headerButtons">
-                    {headerButtons.map(button =>
-                        <ButtonAddTask
-                            key={button.label}
-                            localisation={currentLocalisation}
-                            button={button}
-                        />
-                    )}
-                </div>
-            </div>
-        )
-    }
-
-    function renderServiceModeButtons() {
-        function getCustomServiceBtnStyle(button) {
-            const { serviceMode_jobName } = props.reducerServiceMode;
-            return button === serviceMode_jobName ? "btn btn-light btn-sm" : "btn btn-outline-light btn-sm";
-        }
-
-        return (
-            <div className="app__header_header-buttons-wrapper-service">
-                <i className="fa fas fa-cogs"></i>
-                <div className="app__header_headerButtons-service">
-                    {allJobNames.map(jobName =>
-                        <button
-                            key={jobName}
-                            className={getCustomServiceBtnStyle(jobName)}
-                            onClick={() => props.changeServiceMode_jobName(jobName)}
-                        >{jobName}
-                        </button>
-                    )}
-                </div>
-            </div>
-        )
-    }
-
-    useEffect(() => {
-        setCurrentLocalisation(props.reducerLocalisations.currentLocalisation);
-        setServiceModen(props.reducerServiceMode.serviceMode);
-    }, [props.reducerLocalisations.currentLocalisation, props.reducerServiceMode.serviceMode])
-
-    const isSupervisor = userService.isCurrentUserGreaterThanORequalTo("Koordynator");
-    const isCommonUser = userService.getUserFromJWT().isCommonUser;
-
+    const shouldRenderAddTaskButton = currentLocalisation.category === "Maszyna" || isCommonUser;
+    
     return (
         <header className="app__header">
-            {serviceMode && renderServiceModeButtons()}
-            {(currentLocalisation.category === "Maszyna" || isCommonUser) && renderAddTaskButtons()}
+            {serviceMode && renderMasterInstance.renderServiceModeButtons({handler: props.changeServiceMode_jobName })}
+            {shouldRenderAddTaskButton && renderMasterInstance.renderAddTaskButtons({headerButtons, currentLocalisation})}
+            
             <div className="app__header_title-barIcon-wrapper">
                 <div className="app__header-title">{currentLocalisation.name}</div>
-                {isSupervisor && renderShowDataMenu()}
+                {renderMasterInstance.renderShowDataMenu({
+                    menuItems,
+                    menuHandler: handleChangeCurrentLocalisation,
+                    serviceModeHandler: handleChangeServiceMode
+                    })
+                }
             </div>
+
         </header>
     );
 }
@@ -128,6 +75,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         toggleServiceMode: bool => dispatch(actionsServiceMode.toggleServiceMode(bool)),
+        toggleManagerMode: bool => dispatch(actionsServiceMode.toggleManagerMode(bool)),
         changeServiceMode_jobName: jobName => dispatch(actionsServiceMode.changeServiceMode_jobName(jobName)),
         changeCurrentLocalisation: localisation => dispatch(actionsLocalisations.changeCurrentLocalisation(localisation)),
     }
@@ -136,4 +84,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Tasks_HeaderBar)
+)(TasksHeaderBar)

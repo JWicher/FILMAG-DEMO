@@ -4,5 +4,8 @@ export default {
     localisations: "/localisations",
     tasks: "/tasks",
     getExcelFileWithTasks: "/getExcelFile",
-
+    finishGoods : "/finishGoods",
+    logs : "/logs",
+    resetPassword: "/resetPassword",
+    resetPasswordDefault: "/resetPassword/default"
 }

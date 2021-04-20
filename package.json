@@ -1,6 +1,6 @@
 {
   "name": "FILMAG-DEMO",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simplified ERP system",
   "author": "Jarosław Wicher",
   "main": "server.js",
@@ -32,6 +32,7 @@
     "node-pre-gyp": "^0.13.0",
     "nodemailer": "^6.3.0",
     "randomstring": "^1.1.5",
+    "socket.io": "^4.0.1",
     "supervisor": "^0.12.0",
     "winston": "^3.2.1",
     "xlsx": "^0.14.5",

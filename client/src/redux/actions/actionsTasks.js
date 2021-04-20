@@ -1,11 +1,11 @@
-import { UPDATE_TASKS, CHANGE_CURRENT_SORTING_STATUS, TOGGLE_CHOOSE_MANY_TASKS_MODE, UPDATE_CHOOSED_TASKS_FROM_MANAGER_MODE } from '../constants/actionTypes';
+import { UPDATE_TASKS, CHANGE_CURRENT_SORTING_TASK_STATUS, TOGGLE_CHOOSE_MANY_TASKS_MODE, UPDATE_CHOOSED_TASKS_FROM_MANAGER_MODE } from '../constants/actionTypes';
 
 export const updateTasks = (tasks) => ({
   type: UPDATE_TASKS,
   tasks: tasks
 });
-export const changeCurrentSortingStatuts = (currentSortingStatus) => ({
-  type: CHANGE_CURRENT_SORTING_STATUS,
+export const changeCurrentSortingStatus = (currentSortingStatus) => ({
+  type: CHANGE_CURRENT_SORTING_TASK_STATUS,
   currentSortingStatus: currentSortingStatus
 });
 export const toggleChooseManyTasksMode = (chooseManyTasksMode) => ({
@@ -19,7 +19,7 @@ export const updateChoosenTasksFromManagerMode = (selectedTasksIDs_fromManagerMo
 
 export default {
   updateTasks,
-  changeCurrentSortingStatuts,
+  changeCurrentSortingStatus,
   toggleChooseManyTasksMode,
   updateChoosenTasksFromManagerMode
 }

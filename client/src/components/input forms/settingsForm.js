@@ -6,7 +6,7 @@ import ConfirmAlertSettings from '../confirmAlertSettings';
 class SettingsForm extends Component {
     state = {}
 
-    renderHeader(columns, mainDivCSS, contentCSS) {  // podobne
+    renderHeader(columns, mainDivCSS, contentCSS) {
         return (
             <div className={mainDivCSS}>
                 {columns.map(column =>
@@ -14,9 +14,8 @@ class SettingsForm extends Component {
                 )}
             </div>
         )
-    }
-
-    renderItems(items, mainDivCSS, itemCSS, contentCSS) {  // podobne
+    };
+    renderItems(items, mainDivCSS, itemCSS, contentCSS) {
         return (
             <div className={mainDivCSS}>
                 {items.map(user =>
@@ -30,9 +29,8 @@ class SettingsForm extends Component {
                 )}
             </div>
         )
-    }
-
-    renderConfirmAlert(user, form, checkDisplay = false) { // podobne
+    };
+    renderConfirmAlert(user, form, checkDisplay = false) {
         const isDisbaled = checkDisplay && !userService.isCurrentUserGreaterThan(user.job) ? true : false;
         return (
             <ConfirmAlert
@@ -45,7 +43,7 @@ class SettingsForm extends Component {
     };
     renderAddnewItemButton(form) {
         return <ConfirmAlertSettings form={form} />
-    };  // podobne
+    };
 
 }
 

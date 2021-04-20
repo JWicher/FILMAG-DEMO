@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
+import { io } from "socket.io-client";
+
 import TasksHeaderBar from './tasksHeaderBar';
 import SortingButtons from './sortingButtons';
 import LogoutButtonBox from '../util compnents/logoutButtonBox';
@@ -9,36 +12,57 @@ import localisationService from '../../services/localisationService';
 import taskService from '../../services/taskService';
 import userService from '../../services/userService';
 import client_paths from '../../constants/client_URL_paths';
-import { connect } from 'react-redux';
 import actionsTasks from '../../redux/actions/actionsTasks';
 import actionsLocalisations from '../../redux/actions/actionsLocalisations';
+
+const apiUrl = process.env.REACT_APP_BASIC_API_URL
 
 class ShowTasks extends Component {
       state = {
             data: []
       };
 
-      interval_cdm_refreshingData = '' // interwał do oðświeżania danych co 10 sekund
+      socket = io(apiUrl);
 
       async componentDidMount() {
             this.mounted = true;
             this.redirectIfNeeded();
             this.setActivityDetection();
+            this.props.changeCurrentSortingStatus(false)
+
+            this.socket.on('tasks_updated', async () => await this.fetchNewData())
+
             try {
-                  const { pathname } = this.props.location;
-                  const currentLocalisation = await localisationService.getCurrentLocalisation(pathname);
-                  this.props.changeCurrentLocalisation(currentLocalisation);
+                  await this.setCurrentLocalisationInRedux();
+                  await this.updateUserValidLocalisations();
 
                   const { tasks: data_from_DB } = this.props.reducerTasks;
                   const data = data_from_DB !== null ? data_from_DB : await this.getTasksFromDB_updateReducerState()
                   this.mounted && this.setState({ data });
             } catch (ex) {
-                  if (ex.response)
-                        toast.error("Problem z pobraniem danych z serwera.")
+                  toast.error("Problem z pobraniem danych z serwera.")
             }
-            this.interval_cdm_refreshingData = this.set_interval_refreshData()// uruchomienie odświeżania danych
       }
 
+      async fetchNewData(){
+            try{
+                  const data = await this.getTasksFromDB_updateReducerState()
+                  this.mounted && this.setState({ data });
+            }
+            catch (error) {
+                  toast.error("Problem z pobraniem danych z serwera.")
+            }
+      }
+      async setCurrentLocalisationInRedux(){
+            const { pathname } = this.props.location;
+            const currentLocalisation = await localisationService.getCurrentLocalisation(pathname);
+            this.props.changeCurrentLocalisation(currentLocalisation);
+      }
+      async updateUserValidLocalisations(){
+            const user = userService.getUserFromJWT();
+            const userLocalisations = await localisationService.getUserLocalisationsFromDB(user)
+            localisationService.setUserLocalisations(userLocalisations)
+      }
       async getTasksFromDB_updateReducerState() {
             const tasks = await taskService.getTasks();
             this.props.updateTasks(tasks);
@@ -61,8 +85,10 @@ class ShowTasks extends Component {
 
       componentWillUnmount() {
             this.mounted = false;
-            this.remove_intervals_refreshData();
-            this.removeActivityDetection();
+            this.socket.disconnect();
+            window.removeEventListener("visibilitychange", this.onHideApp)
+            window.removeEventListener("focus", () => { this.mounted = true })
+            window.removeEventListener("blur", () => { this.mounted = false })
       }
 
       // window event handlers
@@ -72,51 +98,13 @@ class ShowTasks extends Component {
             window.addEventListener("blur", this.onBlur)
       }
 
-      removeActivityDetection() {
-            window.removeEventListener("visibilitychange", this.onHideApp)
-            window.removeEventListener("focus", this.onFocus)
-            window.removeEventListener("blur", this.onBlur)
-      }
-
-      onFocus = () => {
-            // uruchomienie odświeżania danych po powrocie do aplikacji
-            this.mounted = true;
-            this.interval_onFocus_refreshingData = this.set_interval_refreshData()
-      }
-
-      onBlur = () => {
-            // przestanie wysyłania zapytań na serwer wyjściu z zakładki aplikacji
-            this.remove_intervals_refreshData();
-      }
-
       onHideApp = async () => {
             // odświeżenie danych od razu po powrocie do aplikacji
             if (document.visibilityState === "visible") {
                   this.mounted && this.setState({
                         data: await taskService.getTasks()
                   });
-                  this.remove_intervals_refreshData();
-                  this.interval_onHideApp_refreshingData = this.set_interval_refreshData()
             }
-            else if (document.visibilityState === "hidden") {
-                  this.remove_intervals_refreshData();
-            }
-      }
-
-      set_interval_refreshData = () => {
-            return window.setInterval(
-                  async () => {
-                        const tasks = await this.getTasksFromDB_updateReducerState();
-                        this.mounted && this.setState({ data: tasks })
-                  }
-                  , 10000)
-      }
-
-      remove_intervals_refreshData() {
-            this.mounted = false;
-            clearInterval(this.interval_cdm_refreshingData);
-            clearInterval(this.interval_onFocus_refreshingData);
-            clearInterval(this.interval_onHideApp_refreshingData);
       }
 
       // services
@@ -161,6 +149,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
       return {
             updateTasks: tasks => dispatch(actionsTasks.updateTasks(tasks)),
+            changeCurrentSortingStatus: newStatus => dispatch(actionsTasks.changeCurrentSortingStatus(newStatus)),
             changeCurrentLocalisation: localisation =>
                   dispatch(actionsLocalisations.changeCurrentLocalisation(localisation)),
       }

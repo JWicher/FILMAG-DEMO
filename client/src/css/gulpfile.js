@@ -8,7 +8,6 @@ gulp.task('sass', () => {
         .pipe(sourcemaps.init())
         .pipe(sass({outputStyle: 'expanded'}))
         .pipe(autoprefixer({
-            browsers: ['last 2 versions'],
             cascade: false
         }))
         .pipe(sourcemaps.write())

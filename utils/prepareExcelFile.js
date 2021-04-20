@@ -20,7 +20,7 @@ function createExcelSheetWithData(dataFromDB) {
     const excelSheet = XLSX.utils.json_to_sheet(
         data,
         {
-            header: [ // dane nie brane do realizacji, tylko prezentacja poglądowa
+            header: [ // dane niebrane do realizacji, tylko prezentacja poglądowa
                 "createdInFormatedData",
                 "location",
                 "content",

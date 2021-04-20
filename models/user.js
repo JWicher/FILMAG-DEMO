@@ -98,8 +98,7 @@ async function generateUserPIN() {
 function validateUser(reqBody) {
 
   const schema = {
-    name: Joi.string().min(1).max(255).required(),
-    password: Joi.string().min(5).max(255).required(),
+    name: Joi.string().min(1).max(255).required()
   }
 
   return Joi.validate(reqBody, schema);

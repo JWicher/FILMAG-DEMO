@@ -1,0 +1,211 @@
+.finishGood-box {
+    font-size: 1.5rem;
+    text-align: center;
+    overflow: hidden;
+    flex: 1;
+    &__header {
+        padding-right: 5px;
+        border-bottom: 1px solid grey;
+        font-weight: bold;
+    }
+    
+    &__finishGood { height: 58px; }
+    &__header,
+    &__finishGood{    
+        font-size: 1.4rem;
+        display: flex;
+        flex-grow: 1;
+        justify-content: stretch;
+        align-items: center;
+        overflow: hidden;
+
+        & > div > button > p { margin: 0px; } // żeby przyciski np clsoe task, wyswietlały się poprawnie
+
+        &_index{ @include width_minwidth(50px) }
+        &_name{
+            @include width_minwidth(300px);
+            text-align: left;
+        }
+        &_description{
+            flex-grow: 1;
+            text-align: left;
+            overflow: hidden;
+        }
+        &_qty{ @include width_minwidth(60px);
+            &-partialDelivery{ display: none; };
+        }
+        &_createdAtFormatedData{
+            @include width_minwidth(260px);
+        
+            &-full { display: block;}
+            &-splitted { display: none;}
+        }
+        &_rawMaterialPrice{ @include width_minwidth(200px); }
+        &_reservation{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            @include width_minwidth(150px);
+            & > button {
+                @include width_minwidth(100px);
+            }
+        }
+        &_btnDelete{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            @include width_minwidth(50px);
+        }
+        &_status{
+            margin-right: 5px;
+            @include width_minwidth(120px);
+        }
+        &:hover{ background: rgba(grey, $alpha: .3) }
+
+    }
+    &__btn-label_short { display: none; }
+}
+
+@media all and (max-width: $monitor) {
+    .finishGood-box {
+        &__header,
+        &__finishGood {    
+            font-size: 1.0rem;
+            &_index{ @include width_minwidth(35px); }
+            &_name{ @include width_minwidth(200px); }
+
+            &_qty{ @include width_minwidth(50px);}
+            &_createdAtFormatedData{ @include width_minwidth(180px); }
+            &_rawMaterialPrice{ @include width_minwidth(150px); }
+        }
+    }
+}
+
+@media all and (max-width: $laptop) {
+    .finishGood-box {
+        &__header,
+        &__finishGood {    
+            font-size: 0.9rem;
+            & > div > button { font-size: 0.7rem; }
+            &_index{ @include width_minwidth(35px); }
+            &_name{ @include width_minwidth(200px); }
+
+            &_qty{ @include width_minwidth(45px);}
+            &_createdAtFormatedData{
+                @include width_minwidth(120px);
+                &-full { display: none; }
+
+                &-splitted { display: block; }
+            }
+            &_rawMaterialPrice{ @include width_minwidth(120px); }
+            &_reservation{
+                @include width_minwidth(100px);
+                & > button {
+                    @include width_minwidth(90px);
+                }
+            }
+            &_btnDelete{ @include width_minwidth(45px); };
+        }
+    }
+}
+
+@media all and (max-width: $tablet) {
+    .finishGood-box {
+        &__header,
+        &__finishGood {    
+            font-size: 0.8rem;
+            & > div > button { font-size: 0.7rem; }
+            &_index{ @include width_minwidth(30px); }
+            &_name{ @include width_minwidth(100px); }
+
+            &_qty{ @include width_minwidth(45px);}
+            &_createdAtFormatedData{ @include width_minwidth(100px); }
+            &_rawMaterialPrice{ @include width_minwidth(100px); }
+            &_reservation{
+                @include width_minwidth(80px);
+                & > button {
+                    @include width_minwidth(70px);
+                }
+            }
+            &_btnDelete{ @include width_minwidth(45px); };
+            &_status{ @include width_minwidth(80px); }
+        }
+    }
+}
+
+@media all and (max-width: $tablet-sm) {
+    
+    .finishGood-box {
+        &__header,
+        &__finishGood {    
+            font-size: 0.6rem;
+            & > div > button { font-size: 0.5rem; padding: 3px 8px;}
+            &_index{ @include width_minwidth(25px); }
+            &_name{ @include width_minwidth(80px); }
+
+            &_qty{ @include width_minwidth(30px);}
+            &_createdAtFormatedData{ @include width_minwidth(80px); }
+            &_rawMaterialPrice{ @include width_minwidth(80px); }
+            &_reservation{
+                @include width_minwidth(60px);
+                & > button {
+                    @include width_minwidth(25px);
+                }
+            }
+            &_btnDelete{
+                @include width_minwidth(25px);
+                margin-right: 3px;
+            }
+            &_status{ @include width_minwidth(60px); }
+        }
+        &__btn-label_full { display: none; }
+        &__btn-label_short { display: block; }
+    }
+}
+
+
+@media all and (max-width: $phone-big) {
+    .finishGood-box {
+        &__header,
+        &__finishGood {    
+            font-size: 0.6rem;
+            &_index{ @include width_minwidth(25px); }
+            &_createdAtFormatedData{
+                @include width_minwidth(80px);
+                &-full { display: none; }
+
+                &-splitted { display: block; }
+            }
+            &_rawMaterialPrice{ @include width_minwidth(50px); }
+            &_reservation{
+                @include width_minwidth(60px);
+                & > button {
+                    @include width_minwidth(25px);
+                }
+            }
+            &_btnDelete{
+                @include width_minwidth(25px);
+                margin-right: 3px;
+            }
+            &_status{
+                @include width_minwidth(60px);
+            }
+        }
+    }
+}
+
+@media all and (max-width: $phone) {
+    .finishGood-box {
+        &__header,
+        &__finishGood {    
+            font-size: 0.5rem;
+            &_index{ @include width_minwidth(20px); }
+            &_name{ @include width_minwidth(60px); }
+            &_qty{ @include width_minwidth(25px); }
+            &_createdAtFormatedData{ display: none; }
+            &_rawMaterialPrice{ @include width_minwidth(50px); }
+            &_status{ @include width_minwidth(50px); }
+        }
+    }
+}

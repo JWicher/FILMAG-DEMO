@@ -3,7 +3,6 @@ import utils from '../../services/utils';
 import { connect } from 'react-redux';
 
 const TaskBoxHeader = (props) => {
-
     const invisibleText = props.reducerLocalisations.currentLocalisation.name === "UTRZYMANIE RUCHU" ? " invisible" : "";
     const isVisible = (column) => {
         return column.path === "qty" ? invisibleText : "";
@@ -19,7 +18,7 @@ const TaskBoxHeader = (props) => {
             {props.columns.map(column =>
                 <div
                     key={column.path}
-                    className={utils.getCustomTaskCss(column.path, "header") + isVisible(column)}
+                    className={utils.getCustomCssClass(column.path, "task-box__header") + isVisible(column)}
                 >{column.label}
                 </div>
             )}

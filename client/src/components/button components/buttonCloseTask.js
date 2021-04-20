@@ -8,7 +8,6 @@ import actionsTasks from '../../redux/actions/actionsTasks';
 const ButtonCloseTask = (props) => {
 
     const handleCloseTask = async (task) => {
-
         task.isDone = true;
         task.closedBy = userService.getUserFromJWT().name;
 
@@ -33,12 +32,10 @@ const ButtonCloseTask = (props) => {
             </p>,
     };
 
-
     return (
         <ConfirmAlert item={props.task} itemRepresentation={props.task.content} form={form_closeTask} />
     )
 }
-
 
 const mapStateToProps = (state) => {
     return state;

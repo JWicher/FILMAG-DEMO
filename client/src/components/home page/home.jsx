@@ -7,7 +7,6 @@ import userService from '../../services/userService';
 import client_path from '../../constants/client_URL_paths';
 
 const Home = () => {
-
     const user = userService.getUserFromJWT();
 
     if (!user) return <Redirect to={client_path.loginPage} />

@@ -13,5 +13,10 @@ export default {
         user: "/settings/user",
         users: "/settings/users",
         localisations: "/settings/localisations"
-    }
+    },
+    finishGoods : {
+        main: "/finish-goods",
+        paramId: "/finish-goods/:id"
+    },
+    logs: "/logs"
 }

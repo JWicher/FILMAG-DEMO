@@ -10,7 +10,6 @@ import ButtonCloseManyTasks from '../button components/buttonCloseManyTasks';
 
 const SortingButtons = (props) => {
     const [currentSortingStatus, setCurrentSortingStatus] = useState(false);
-
     const sortingButtons = [
         { label: "W trakcie", path: false },
         { label: "Zakończone", path: true },
@@ -19,26 +18,21 @@ const SortingButtons = (props) => {
 
     const handleChangeSortingStatus = currentSortingStatus => {
         setCurrentSortingStatus(currentSortingStatus);
-        props.changeCurrentSortingStatuts(currentSortingStatus)
+        props.changeCurrentSortingStatus(currentSortingStatus)
     };
 
     function getSortingButtonCustomStyles(buttonPath) {
-        return (
-            (buttonPath === currentSortingStatus ? "btn-secondary" : "btn-outline-secondary")
-            + "  btn btn-sm sorting-buttons-box_sortingButton"
-        )
+        const buttonStyle = (buttonPath === currentSortingStatus ? "btn-secondary" : "btn-outline-secondary")
+        return buttonStyle + "  btn btn-sm sorting-buttons-box_sortingButton";
     }
 
-
     function renderSortingButtons() {
-        return (
-            sortingButtons.map(button =>
-                <button key={button.label}
-                    className={getSortingButtonCustomStyles(button.path)}
-                    onClick={() => handleChangeSortingStatus(button.path)}
-                >{button.label}
-                </button>
-            )
+        return sortingButtons.map(button =>
+            <button key={button.label}
+                className={getSortingButtonCustomStyles(button.path)}
+                onClick={() => handleChangeSortingStatus(button.path)}
+                ><span className="buttontext">{button.label}</span>
+            </button>
         )
     }
 
@@ -63,13 +57,11 @@ const SortingButtons = (props) => {
 }
 
 
-const mapStateToProps = (state) => {
-    return state;
-};
+const mapStateToProps = (state) =>  state;
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        changeCurrentSortingStatuts: newStatus => dispatch(actionsTasks.changeCurrentSortingStatuts(newStatus)),
+        changeCurrentSortingStatus: newStatus => dispatch(actionsTasks.changeCurrentSortingStatus(newStatus)),
     }
 };
 

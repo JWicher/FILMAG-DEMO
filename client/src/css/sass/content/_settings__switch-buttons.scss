@@ -1,0 +1,52 @@
+.settings__switch-buttons{
+    & > button,
+    & a > button{ margin-right: 10px; min-width: 150px; padding: 5px 10px; }
+}
+
+@media all and (max-width: $monitor) {
+    .settings__switch-buttons{
+        & > button,
+        & a > button{ font-size: 0.8rem; min-width: 140px; padding: 5px 10px; }
+    }
+}
+@media all and (max-width: $laptop) {
+    .settings__switch-buttons{
+        & > button,
+        & a > button{ font-size: 0.7rem; min-width: 130px; padding: 5px 5px; }
+    }
+}
+@media all and (max-width: $tablet) {
+    .settings__switch-buttons{
+        & > button,
+        & a > button{
+            font-size: 0.6rem;
+            margin-right: 7px;
+            padding: 5px 5px; 
+            min-width: 75px
+        }
+    }
+}
+
+@media all and (max-width: $tablet-sm) {
+    .settings__switch-buttons{
+        & > button,
+        & a > button{
+            font-size: 0.5rem;
+            margin-right: 5px;
+            padding: 3px 5px;
+            min-width: 60px
+         }
+    }
+}
+@media all and (max-width: $phone-big) {
+    .settings__switch-buttons{
+        & > button,
+        & a > button { font-size: 0.5rem; padding: 3px 5px; }
+    }
+}
+@media all and (max-width: $phone) {
+    .settings__switch-buttons{
+        & > button,
+        & a > button { font-size: 0.4rem; }
+    }
+}

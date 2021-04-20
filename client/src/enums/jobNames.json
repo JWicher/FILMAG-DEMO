@@ -1,0 +1,14 @@
+{
+    "SuperAdmin": 1000,
+    "Admin": 100,
+    "Prezes": 14,
+    "Dyrektor": 13,
+    "Kierownik": 12,
+    "Mistrz": 11,
+    "Koordynator": 10,
+    "Handlowiec": 5,
+    "Współdzielone": 4,
+    "Prac. utrz. ruchu": 3,
+    "Magazynier": 2,
+    "Operator": 1
+}

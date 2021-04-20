@@ -1,9 +1,9 @@
 {
     "jwtPrivateKey": "jwtPrivateKey_filmag_demo",
     "db": "dbAdress_filmag_demo",
-    "mongodumpCommand": "mongodumpCommand_filmag_demo",
+    "mongodumpCommand" : "mongodumpCommand_filmag_demo",
     "client_email": "client_email_filmag_demo",
     "private_key": "private_key_filmag_demo",
     "folderId": "backupFolderId_filmag_demo",
-    "validOrigin": "validOrigin_filmag_demo"
+    "validOrigin" : "validOrigin_filmag_demo"
 }

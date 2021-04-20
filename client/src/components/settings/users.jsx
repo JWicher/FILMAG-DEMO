@@ -2,81 +2,26 @@ import React, { Component } from 'react';
 import Joi from 'joi-browser';
 import { FixedSizeList } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
+import { toast } from 'react-toastify';
+import { io } from "socket.io-client";
+
 import LinkWithButton from '../common/linkWithButton';
+import Loader from '../common/loader';
+import CustomCheckBox from '../common/customCheckBox';
 import ConfirmAlert from '../input forms/confirmAlert';
 import ConfirmAlertSettings from '../input forms/confirmAlertSettings';
-import LogoutButtonBox from '../util compnents/logoutButtonBox';
 import InputCustomSelect from '../input forms/inputCustomSelect';
-import CustomCheckBox from '../common/customCheckBox';
+import LogoutButtonBox from '../util compnents/logoutButtonBox';
 import SettingsUserRecord from './userRecord';
-import Loader from '../common/loader';
 import userService from '../../services/userService';
+import forms from "../constans/forms/formsUsers.jsx";
+import columnsUsers from "../constans/columns/columnsUsers.jsx";
+import schemas from "../constans/schemas/schemas";
 import client_paths from '../../constants/client_URL_paths';
-import { toast } from 'react-toastify';
+
+const apiUrl = process.env.REACT_APP_BASIC_API_URL;
 
 class Users extends Component {
-    state = {
-        users: [],
-    };
-    // forms and variables
-    form_deleteUser = {
-        title: "Potwierdź usunięcie konta",
-        btn_label: <p><span className="user__content_btn-label_full">Usuń konto</span><span className="user__content_btn-label_short">X</span></p>,
-        btn_css: "btn btn-danger btn-sm",
-        action: (user) => this.handleDeleteUser(user)
-    };
-    form_resetPassword = {
-        title: "Resetowanie hasło",
-        btn_label: <p><span className="user__content_btn-label_full">Resetuj hasło</span><span className="user__content_btn-label_short">R</span></p>,
-        message: `Resetujesz hasło użytkownika. Nowe hasło: 12345.`,
-        btn_css: "btn btn-secondary btn-sm",
-        action: (user) => this.handleResetPassword(user)
-    };
-    form_addteUser = {
-        title: "Dodaj konto użytkownika",
-        p_label: "Login",
-        btn_label: "Dodaj nowe konto",
-        placeholder_1: "Podaj nazwę użytkownika",
-        btn_css: "btn btn-success btn-sm",
-        action: (inputData) => this.handleAddUser(inputData)
-    };
-    columns = [
-        { label: "#", path: "#" },
-        { label: "Pracownik", path: "name" },
-        { label: "Stanowisko", path: "userJob" },
-        { label: <i className="fa fas fa-desktop"></i>, path: "status" },
-        {
-            label:
-                <div>
-                    <span className="user__content_btn-label_full">Magazyn</span>
-                    <span className="user__content_btn-label_short">MG</span>
-                </div>,
-            path: "Magazyn"
-        },
-        {
-            label:
-                <div>
-                    <span className="user__content_btn-label_full">Maszyny</span>
-                    <span className="user__content_btn-label_short">MS</span>
-                </div>,
-            path: "Maszyny"
-        },
-        {
-            label:
-                <div>
-                    <span className="user__content_btn-label_full">Utrzymanie ruchu</span>
-                    <span className="user__content_btn-label_short">UR</span>
-                </div>,
-            path: "Utrzymanie ruchu"
-        },
-        { label: "", path: "btn-reset" }
-    ];
-    options = userService.getJobNames();
-    schema = {
-        name: Joi.string().min(5).required().error(() => { return { message: "Podana nazwa jest za krótka. Minimum to 5 znaków." }; }),
-        password: Joi.string().min(5).required().error(() => { return { message: "Podane hasło jest za krótkie. Minimum to 5 znaków." }; })
-    };
-    // basic
     constructor() {
         super();
         const isAdmin = userService.isCurrentUserGreaterThanORequalTo("Admin");
@@ -84,31 +29,52 @@ class Users extends Component {
             this.columns.push({ label: "", path: "btn-delete" })
         }
     };
-    async componentDidMount() {
-        this.setState({ users: await userService.getUsers() });
+
+    state = {
+        users: [],
     };
+
+    columns = columnsUsers.getUserColumns();
+    options = userService.getJobNames();
+    schema = schemas.getUserSchema();
+    socket = io(apiUrl);
+
+    async componentDidMount() {
+        this.mounted = true;
+        this.socket.on('users_updated', async () => await this.fetchNewData());
+
+        await this.fetchNewData();
+    };
+
+    componentWillUnmount() {
+        this.mounted = false;
+        this.socket.disconnect();
+  }
+
+    async fetchNewData(){
+        try{
+            const users = await userService.getUsers();
+            this.mounted && this.setState({ users });
+        }
+        catch (error) {
+              toast.error("Problem z pobraniem danych z serwera.")
+        }
+    };
+
     // handlers
     handleDeleteUser = async (userToDelete) => {
         try {
-            const user = await userService.deleteUser(userToDelete);
-            let users = [...this.state.users];
-
-            const index = users.findIndex(u => u._id === user._id);
-            if (index < 0) return;
-
-            users.splice(index, 1)
-            this.setState({ users });
+            await userService.deleteUser(userToDelete);
+            toast.info("Usunięto użytkownika.")
         }
         catch (ex) {
             if (ex && ex.response) toast.error(ex.response.data)
         }
     };
     handleAddUser = async inputData => {
-
         try {
             const newUserData = {
-                name: inputData.name,
-                password: "12345"
+                name: inputData.name
             };
 
             const error = this.validateNewUser(newUserData);
@@ -117,19 +83,16 @@ class Users extends Component {
                 return null;
             }
 
-            const newUser = await userService.addUser(newUserData);
-            const users = [...this.state.users];
-            users.unshift(newUser);
-
-            this.setState({ users });
-
-        } catch (ex) {
+            await userService.addUser(newUserData);
+            toast.success("Dodano użytkownika")
+        }
+        catch (ex) {
             if (ex && ex.response) toast.error(ex.response.data)
         }
     };
     handleResetPassword = async user => {
         try {
-            await userService.resetUserPassword({ _id: user._id, password: "12345" });
+            await userService.resetUserPasswordToDefault({ _id: user._id });
             toast.info("Zmieniono hasło użytkownika.")
         }
         catch (ex) {
@@ -141,23 +104,16 @@ class Users extends Component {
         const { error } = Joi.validate(user, this.schema);
         return error ? error.details[0].message : null;
     };
+
     updateUserPermissions = async ({ user, area }) => {
         const userWithLocalyChangedPermissions = this.chamgeUserPermisions(user, area);
-        const updatedUserInDataBase = await userService.updateUser(userWithLocalyChangedPermissions);
-
-        const users = [...this.state.users];
-        const index = users.findIndex(user => user._id === updatedUserInDataBase._id);
-        users[index] = updatedUserInDataBase;
-        this.setState({ users });
+        await userService.updateUser(userWithLocalyChangedPermissions);
     };
     chamgeUserPermisions(user, area) {
         const index = user.permissions.indexOf(area);
-        if (index >= 0) {
-            user.permissions.splice(index, 1);
-        }
-        else {
-            user.permissions.push(area);
-        }
+        if (index >= 0) user.permissions.splice(index, 1);
+        else user.permissions.push(area);
+
         return user;
     }
     selectOptions(user) {
@@ -176,15 +132,13 @@ class Users extends Component {
         const user = users[index];
 
         user.job = input.value;
+        user.isCommonUser = false;
 
         if (input.value === "Współdzielone") {
             user.isCommonUser = true;
         }
-        else user.isCommonUser = false;
-
-        users[index] = await userService.updateUser(user);
-
-        this.setState({ users })
+        
+        await userService.updateUser(user);
     };
     renderCheckBox(user, area) {
         const isDisabled = userService.isCurrentUserLessThanORequalTo(user.job);
@@ -227,7 +181,7 @@ class Users extends Component {
     };
     renderAddUserButton() {
         return (
-            <ConfirmAlertSettings form={this.form_addteUser} />
+            <ConfirmAlertSettings form={forms.addteUser(this.handleAddUser)} />
         )
     };
     renderCellContent = (user, column) => {
@@ -240,11 +194,12 @@ class Users extends Component {
         else if (column.path === "Magazyn") return this.renderCheckBox(user, "Magazyn");
         else if (column.path === "Maszyny") return this.renderCheckBox(user, "Maszyna");
         else if (column.path === "Utrzymanie ruchu") return this.renderCheckBox(user, "Utrzymanie ruchu");
-        else if (!user.isDone && column.path === "btn-reset") return this.renderButton(user, this.form_resetPassword)// kolumna dla przycisku resetu hasła
-        else if (!user.isDone && column.path === "btn-delete") return this.renderButton(user, this.form_deleteUser) // kolumna dla przycisku usunięcia konta
+        else if (column.path === "Wyroby gotowe") return this.renderCheckBox(user, "Wyroby gotowe");
+        else if (column.path === "btn-reset" && !user.isDone) return this.renderButton(user, forms.resetPassword(this.handleResetPassword))
+        else if (column.path === "btn-delete" && !user.isDone) return this.renderButton(user, forms.deleteUser(this.handleDeleteUser))
         return;
     };
-    renderHeader() {  // podobne
+    renderHeader() {
         return (
             <div className="user user__header">
                 {this.columns.map(column =>
@@ -253,7 +208,7 @@ class Users extends Component {
             </div>
         )
     }
-    renderUsers() {  // podobne
+    renderUsers() {
         return (
             <AutoSizer >
                 {({ height, width }) => (

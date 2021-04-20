@@ -5,7 +5,6 @@ import localisationService from '../../services/localisationService';
 import client_paths from '../../constants/client_URL_paths';
 
 class SelectLocalisation extends Component {
-
     state = { validLocalisations: [] };
 
     componentDidMount() {

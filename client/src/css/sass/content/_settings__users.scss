@@ -43,14 +43,19 @@
 
     &:nth-of-type(1){ @include width_minwidth(50px); }
 
-    &:nth-of-type(2){ @include width_minwidth(350px); text-align: left; text-transform: capitalize; }
+    &:nth-of-type(2){
+        @include width_minwidth(185px);
+        text-align: left;
+        text-transform: capitalize;
+    }
     &:nth-of-type(3){ @include width_minwidth(165px); }
     &:nth-of-type(4){ @include width_minwidth(70px); }
     &:nth-of-type(5),
     &:nth-of-type(6),
-    &:nth-of-type(7){ @include width_minwidth(120px); padding: 0 }
-    &:nth-of-type(8),
-    &:nth-of-type(9){ margin-right: 5px; }
+    &:nth-of-type(7),
+    &:nth-of-type(8) { @include width_minwidth(120px); padding: 0 }
+    &:nth-of-type(9),
+    &:nth-of-type(10){ margin-right: 5px; }
     &_btn-label_short { display: none; }
     & > .custom-checkbox{
         padding: 0;
@@ -77,8 +82,12 @@
         &:nth-of-type(4){ @include width_minwidth(35px); }
         &:nth-of-type(5),
         &:nth-of-type(6),
-        &:nth-of-type(7){ @include width_minwidth(85px); }
-        &:nth-of-type(8){ margin-right: 5px; @include width_minwidth(95px); }
+        &:nth-of-type(7),
+        &:nth-of-type(8){ @include width_minwidth(75px); }
+        &:nth-of-type(9){ margin-right: 5px; @include width_minwidth(95px); }
+        
+        &_btn-label_short { display: block; }
+        &_btn-label_full { display: none; }
     }
     .fa-check { padding: 7px; }
 }
@@ -88,16 +97,15 @@
     .user__content{
         & select { padding-left: 7px; }
         &:nth-of-type(2){ flex-grow: 1; }
-        &:nth-of-type(3){ @include width_minwidth(135px); }
+        &:nth-of-type(3){ @include width_minwidth(115px); }
         &:nth-of-type(4){ @include width_minwidth(40px); }
         &:nth-of-type(5),
         &:nth-of-type(6),
-        &:nth-of-type(7){ @include width_minwidth(50px); }
-        &:nth-of-type(8),
-        &:nth-of-type(9){ @include width_minwidth(30px); }
+        &:nth-of-type(7),
+        &:nth-of-type(8){ @include width_minwidth(50px); }
+        &:nth-of-type(9),
+        &:nth-of-type(10){ @include width_minwidth(30px); }
 
-        &_btn-label_short { display: block; }
-        &_btn-label_full { display: none; }
     }
 }
 @media all and (max-width: $tablet-sm) {
@@ -105,12 +113,14 @@
     .user__content{
         & > button.btn { font-size: 0.6rem; }
         &:nth-of-type(2){ @include width_minwidth(100px); }
+        &:nth-of-type(3){ @include width_minwidth(80px); }
         &:nth-of-type(4){ @include width_minwidth(25px); }
         &:nth-of-type(5),
         &:nth-of-type(6),
-        &:nth-of-type(7){ @include width_minwidth(45px); }
-        &:nth-of-type(8),
-        &:nth-of-type(9){ @include width_minwidth(25px); }
+        &:nth-of-type(7),
+        &:nth-of-type(8){ @include width_minwidth(45px); }
+        &:nth-of-type(9),
+        &:nth-of-type(10){ @include width_minwidth(25px); }
     }
     .fa-check { padding: 5px; }
 }
@@ -121,14 +131,15 @@
         & > button.btn { font-size: 0.5rem; padding: 4px 6px; }
         & > div > select { font-size: 0.7rem; height: 25px;padding: 0px 5px; }
         &:nth-of-type(1){ @include width_minwidth(20px); }
-        &:nth-of-type(2){ @include width_minwidth(80px); }
-        &:nth-of-type(3){ @include width_minwidth(95px); }
+        &:nth-of-type(2){ @include width_minwidth(70px); }
+        &:nth-of-type(3){ @include width_minwidth(75px); }
         &:nth-of-type(4){ @include width_minwidth(20px); }
         &:nth-of-type(5),
         &:nth-of-type(6),
-        &:nth-of-type(7){ @include width_minwidth(33px); }
-        &:nth-of-type(8),
-        &:nth-of-type(9){ @include width_minwidth(20px); }
+        &:nth-of-type(7),
+        &:nth-of-type(8){ @include width_minwidth(33px); }
+        &:nth-of-type(9),
+        &:nth-of-type(10){ @include width_minwidth(20px); }
     }
     .fa-check { padding: 4px; padding-top: 5px; }
 }
@@ -138,13 +149,14 @@
         & > button.btn { font-size: 0.4rem; padding: 4px 6px;}
         & > div > select { font-size: 0.5rem; height: 20px; }
         &:nth-of-type(2){ @include width_minwidth(70px); }
-        &:nth-of-type(3){ @include width_minwidth(90px); }
+        &:nth-of-type(3){ @include width_minwidth(70px); }
         &:nth-of-type(4){ @include width_minwidth(20px); }
         &:nth-of-type(5),
         &:nth-of-type(6),
-        &:nth-of-type(7){ @include width_minwidth(23px); }
-        &:nth-of-type(8){ margin-right: 2px; margin-left: 3px;}
-        &:nth-of-type(9){ margin-right: 2px; }
+        &:nth-of-type(7),
+        &:nth-of-type(8){ @include width_minwidth(23px); }
+        &:nth-of-type(9){ margin-right: 2px; margin-left: 3px;}
+        &:nth-of-type(10){ margin-right: 2px; }
     }
     .fa-check {
         &-yes{ background: rgb(28, 218, 43) }

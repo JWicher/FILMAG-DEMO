@@ -3,9 +3,7 @@ import logoEduLEAN from '../../css/images/logo_eduLEAN.png';
 import logoEkopak from '../../css/images/logo_ekopak.png'
 
 const Advertisement = () => {
-
-    const show_advertisements = false;
-    // const show_advertisements = JSON.parse(process.env.REACT_APP_SHOW_ADVERTISEMENTS);
+    const show_advertisements = JSON.parse(process.env.REACT_APP_SHOW_ADVERTISEMENTS);
 
     if (!show_advertisements) {
         return (

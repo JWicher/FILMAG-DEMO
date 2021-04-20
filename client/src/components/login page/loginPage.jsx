@@ -7,8 +7,8 @@ import userService from '../../services/userService';
 import localisationService from '../../services/localisationService';
 import authService from '../../services/authService';
 import utilsService from '../../services/utils';
-import httpService from '../../services/httpService';
 import client_paths from '../../constants/client_URL_paths';
+import schemas from "../constans/schemas/schemas";
 
 class LoginPage extends Component {
     constructor(props) {
@@ -22,11 +22,7 @@ class LoginPage extends Component {
         }
     }
 
-    schema = {
-        name: Joi.string().min(1).required().error(() => { return { message: "Za krótki login." }; }),
-        password: Joi.string().min(5).required().error(() => { return { message: "Za krótkie hasło." }; })
-    };
-    errorMessage = "Obecnie Twoje konto nie posiada dostępu do żadych lokalizacji. Zgłoś problem przełożonemu lub adminowi."
+    schema = schemas.getLoginPageSchema();
 
     handleInputOnChange = ({ currentTarget: input }) => {
         const user = { ...this.state.user };
@@ -44,7 +40,7 @@ class LoginPage extends Component {
             const jwt = await authService.login(name, password);
 
             authService.setJwt(jwt);
-            httpService.setHeader_xAuthToken(jwt)
+            authService.setTokenToRequestsHeader(jwt);
 
             const user = userService.getUserFromJWT();
             const userLocalisations = await localisationService.getUserLocalisationsFromDB(user)
@@ -60,7 +56,6 @@ class LoginPage extends Component {
 
             this.runLoader(false);
         }
-
     };
 
     runLoader(mode) {
@@ -84,7 +79,7 @@ class LoginPage extends Component {
             this.props.history.push(userLocalisations[0].path);
         }
         else {
-            toast.error(this.errorMessage);
+            toast.error("Obecnie Twoje konto nie posiada dostępu do żadych lokalizacji. Zgłoś problem przełożonemu lub adminowi.");
             return null;
         }
     }
@@ -128,7 +123,6 @@ class LoginPage extends Component {
         );
     }
     render() {
-
         return (
             <React.Fragment>
                 <header className="app__header">

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import ConfirmAlert from '../input forms/confirmAlert';
+import authService from '../../services/authService';
 import userService from '../../services/userService';
 import client_paths from '../../constants/client_URL_paths';
 import actionsServiceMode from '../../redux/actions/actionsServiceMode';
@@ -29,7 +30,7 @@ class LogoutButtonBox extends Component {
 
     logout = async () => {
         try {
-            await userService.logoutUser();
+            await authService.logoutUser(this.state.user);
             this.props.toggleServiceMode(false);
             this.props.toggleManagerMode(false);
             this.props.changeServiceMode_jobName("Admin");
