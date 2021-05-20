@@ -1,0 +1,79 @@
+*::-webkit{
+    &-scrollbar {
+        position: absolute;
+        width: 5px;
+        &-track { -webkit-box-shadow: inset 0 0 6px rgb(0, 0, 0); }
+        &-thumb {
+            border: 1px solid black;
+            background-color: rgb(49, 41, 41);
+            outline: 2px solid rgb(0, 0, 0);
+        }
+    }
+}
+
+button:disabled, select:disabled {
+    cursor: no-drop;
+}
+
+.hr-line-color {
+    border-color: white;
+}
+
+.invisible {
+    visibility: hidden;
+    z-index: -1;
+}
+
+.display-none {
+    display: none;
+}
+
+.display-block {
+    display: block;
+}
+.display-flex {
+    display: flex !important;
+}
+
+.position-absolute-center-center {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+.common-cursor-pointer {
+    cursor: pointer
+}
+
+.common-customCheckBox {
+    background:transparent;
+    border: none;
+}
+
+.warning-urgetTask {
+    width: 35px;
+    height: 45px;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    border-radius: 5px;
+    background-color: red;
+    color: white;
+    text-align: center;
+    font-size: 30px;
+    animation: blinking-warning 0.5s linear infinite;
+    z-index: 10;
+
+}
+
+.align-to-right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+@keyframes blinking-warning {  
+    0% { background: #CC0000; }
+    100% { background: #e97d88; }
+  }
+  

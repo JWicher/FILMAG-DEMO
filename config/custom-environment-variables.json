@@ -4,6 +4,7 @@
     "mongodumpCommand" : "mongodumpCommand_filmag_demo",
     "client_email": "client_email_filmag_demo",
     "private_key": "private_key_filmag_demo",
-    "folderId": "backupFolderId_filmag_demo",
+    "backupFolderId_DB": "backupFolderId_DB_filmag_demo",
+    "backupFolderId_Logs": "backupFolderId_Logs_filmag_demo",
     "validOrigin" : "validOrigin_filmag_demo"
 }

@@ -3,44 +3,18 @@
   "version": "1.0.1",
   "description": "Simplified ERP system",
   "author": "Jarosław Wicher",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
+    "install-all": "(cd filmag-backend && npm install); (cd filmag-frontend && npm install)",
     "test": "mocha --recursive",
-    "start": "node server.js",
-    "start-development-just-frontend": "cd client && npm start",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "start": "node app.js",
+    "start-development-just-frontend": "cd filmag-frontend && npm start",
+    "heroku-postbuild": "(cd filmag-backend && npm install); (cd filmag-frontend && npm install && npm run build)"
   },
   "engines": {
-    "node": "10.15.1"
+    "node": "14.16.1"
   },
   "license": "ISC",
-  "dependencies": {
-    "@hapi/joi": "^15.1.0",
-    "bcrypt": "^3.0.6",
-    "compression": "^1.7.4",
-    "config": "^3.2.2",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "fs-extra": "^8.1.0",
-    "googleapis": "^42.0.0",
-    "helmet": "^3.20.0",
-    "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.15",
-    "memory-cache": "^0.2.0",
-    "mongoose": "^5.6.8",
-    "node-cron": "^2.0.3",
-    "node-pre-gyp": "^0.13.0",
-    "nodemailer": "^6.3.0",
-    "randomstring": "^1.1.5",
-    "socket.io": "^4.0.1",
-    "supervisor": "^0.12.0",
-    "winston": "^3.2.1",
-    "xlsx": "^0.14.5",
-    "zip-a-folder": "0.0.9"
-  },
-  "devDependencies": {
-    "chai": "^4.2.0",
-    "chai-subset": "^1.6.0",
-    "mocha": "^6.2.0"
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }

@@ -1,0 +1,41 @@
+.log-box {
+    font-size: 1.5rem;
+    text-align: center;
+    flex: 1;
+
+    &__header {
+        padding-right: 5px;
+        border-bottom: 1px solid grey;
+        font-weight: bold;
+        font-size: 1.4rem;
+    }
+    &__header,
+    &__log {    
+        font-size: 1rem;
+        display: flex;
+        flex-grow: 1;
+        justify-content: stretch;
+        align-items: center;
+        overflow: hidden;
+
+        & > div > button > p { margin: 0px; } // żeby przyciski np clsoe task, wyswietlały się poprawnie
+
+        &_time{
+            @include width_minwidth(200px);
+            text-align: left;
+        }
+
+        &_level{
+            @include width_minwidth(70px);
+            font-weight: bold;
+        }
+
+        &_message{
+            text-align: left;
+        }
+
+        &:hover{
+            background: rgba(grey, $alpha: .3);
+        }
+    }
+}
